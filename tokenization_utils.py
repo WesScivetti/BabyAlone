@@ -1,6 +1,7 @@
 from datasets import Dataset
 import glob
 import json
+import numpy as np
 from tokenizers import ByteLevelBPETokenizer
 from transformers import PreTrainedTokenizerFast, AutoTokenizer
 
