@@ -1,0 +1,7 @@
+Num	Correctness	Premise	Hypothesis
+1	Y	There are keys.	The keys are on the table.
+1	N	There are keys.	The keys is on the table.
+2	Y	There is a boy.	The boy is cool.
+2	N	There is a boy.	The boy are cool.
+3	Y	I met a man.	He is a nice guy.
+3	N	I met a man.	He are a nice guy.

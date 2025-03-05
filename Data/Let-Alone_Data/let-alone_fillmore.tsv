@@ -1,147 +1,147 @@
 Num	Correctness	Premise	Hypothesis
-1	Y	I barely got up in time to EAT LUNCH, let alone COOK BREAKFAST	I would have needed to get up earlier in order to cook breakfast than to eat lunch.
-2	N	I barely got up in time to EAT LUNCH, let alone COOK BREAKFAST	I would have needed to get up earlier in order to eat lunch than to cook breakfast.
-3	Y	I doubt you could get FRED to eat SHRIMP, let alone LOUISE SQUID.	It would probably be more challenging to get Fred to eat shrimp than to get Louise to eat squid.
-4	N	I doubt you could get FRED to eat SHRIMP, let alone LOUISE SQUID.	It would probably be more challenging to get Louise to eat squid than to get Fred to eat shrimp.
-5	Y	I was too young to serve in World War Two, let alone World War One.	I would've needed to be even older to have served in World War One than to have served in World War Two.
-6	N	I was too young to serve in World War Two, let alone World War One.	I would've needed to be even older to have served in World War Two than to have served in World War One.
-7	Y	Look, around here you can get arrested for going BAREFOOT, let alone for walking around NAKED.	Going barefoot is generally less likely to be a crime than walking around naked.
-8	N	Look, around here you can get arrested for going BAREFOOT, let alone for walking around NAKED.	Walking around naked is generally less likely to be a crime than going barefoot.
-9	Y	Don't worry. Little Seymour's parents let him drink WHISKEY, let alone COKE.	Allowing a child to drink whiskey is more lenient than allowing a child to drink Coke.
-10	N	Don't worry. Little Seymour's parents let him drink WHISKEY, let alone COKE.	Allowing a child to drink Coke is more lenient than allowing a child to drink whiskey.
-11	Y	I doubt you could get FRED to eat squid, let alone LOUISE.	Louise is even less likely to eat squid than Fred is.
-12	N	I doubt you could get FRED to eat squid, let alone LOUISE.	Fred is even less likely to eat squid than Louise is.
-13	Y	I doubt you could get FRED, let alone LOUISE, to eat squid.	Louise is even less likely to eat squid than Fred is.
-14	N	I doubt you could get FRED, let alone LOUISE, to eat squid.	Fred is even less likely to eat squid than Louise is.
-15	Y	My observations warrant the inference that Fred will not eat shrimp, let alone squid.	Fred is even less likely to eat squid than he is to eat shrimp.
-16	N	My observations warrant the inference that Fred will not eat shrimp, let alone squid.	Fred is even less likely to eat shrimp than he is to eat squid. 
-17	Y	I doubt he made Colonel in World War II, let alone General.	It is even less likely that he made General in World War Two than he made Colonel.
-18	N	I doubt he made Colonel in World War II, let alone General.	It is even less likely that he made Colonel in World War Two than he made General.
-19	Y	He doesn't like shrimp, let alone squid.	Liking shrimp is more common than liking squid.
-20	N	He doesn't like shrimp, let alone squid.	Liking squid is more common than liking shrimp.
-21	Y	Who could imagine such a thing, let alone do it?	Doing such a thing would be even more unbelievable than imagining it.
-22	N	Who could imagine such a thing, let alone do it?	Imagining such a thing would be even more unbelievable than doing it.
-23	Y	I don't even want to read an article ABOUT, let alone a book written BY, that swine.	I would want to read a book written by that swine even less than I would want to read an article about them.
-24	N	I don't even want to read an article ABOUT, let alone a book written BY, that swine.	I would want to read an article about that swine even less than I would want to read a book written by them.
-25	Y	You couldn't get JOHN to TOUCH it, let alone LUCILLE to EAT it.	Getting Lucille to eat it would be even more challenging than getting John to touch it.
-26	N	You couldn't get JOHN to TOUCH it, let alone LUCILLE to EAT it.	Getting John to touch it would be even more challenging than getting Lucille to eat it
-27	Y	Max won't eat SHRIMP, let alone SQUID.	Max is even less likely to eat squid than he is to eat shrimp.
-28	N	Max won't eat SHRIMP, let alone SQUID.	Max is even less likely to eat shrimp than he is to eat squid.
-29	Y	Max won't TOUCH the SHRIMP, let alone CLEAN the SQUID	Max is even less willing to clean the squid than he is to touch the shrimp.
-30	N	Max won't TOUCH the SHRIMP, let alone CLEAN the SQUID	Max is even less willing to touch the shrimp than he is to touch the squid.
-31	Y	They couldn't make JOHN eat the SHRIMP, let alone LUCILLE the SQUID.	Getting John to eat the shrimp would be easier than getting Lucille to eat the squid.
-32	N	They couldn't make JOHN eat the SHRIMP, let alone LUCILLE the SQUID.	Getting Lucille to eat squid would be easier than getting John to eat the shrimp.
-33	Y	He wouldn't give A NICKEL to his MOTHER, let alone TEN DOLLARS to a COMPLETE STRANGER.	He is less likely to give ten dollars to a complete stranger than he is to give a nickel to his mother.
-34	N	He wouldn't give A NICKEL to his MOTHER, let alone TEN DOLLARS to a COMPLETE STRANGER.	He is less likely to give a nickel to his mother than he is to give ten dollars to a complete stranger. 
-37	Y	Shrimp Moishe won't eat, let alone squid.	Moishe is less likely to eat squid than shrimp.
-38	N	Shrimp Moishe won't eat, let alone squid.	Moishe is less likely to eat shrimp than squid.
-41	Y	They've broken up Penutian, let alone Macro-Penutian. 	Breaking up Penutian is more fine-grained than breaking up Macro-Penutian.
-42	N	They've broken up Penutian, let alone Macro-Penutian. 	Breaking up Macro-Penutian is more fine-grained than breaking up Penutian.
-43	Y	Penutian they've broken up, let alone Macro-Penutian. 	Breaking up Penutian is more fine-grained than breaking up Macro-Penutian.
-44	N	Penutian they've broken up, let alone Macro-Penutian. 	Breaking up Macro-Penutian is more fine-grained than breaking up Penutian.
-51	Y	Max won't eat shrimp, let alone Rabbi Feldstein. 	Rabbi Feldstein is even less likely to eat shrimp than Max is.
-52	N	Max won't eat shrimp, let alone Rabbi Feldstein. 	Max is even less likely to eat shrimp than Rabbi Feldstein is.
-53	Y	Minnie wasn't born by 1941, let alone Meg. 	Minnie is older than Meg.
-54	N	Minnie wasn't born by 1941, let alone Meg. 	Meg is older than Minnie.
-57	Y	John won't do it for you, let alone Bill. 	Bill is even less likely to do it for you than John is.
-58	N	John won't do it for you, let alone Bill. 	John is even less likely to do it for you than Bill is.
-59	Y	John wasn't there, let alone Louise.	It was more likely that John would be there than Louise.
-60	N	John wasn't there, let alone Louise.	It was more likely that Louise would be there than John.
-61	Y	I didn't want Fred to do it, let alone Sue. 	It would be even less preferable for Sue to do it than Fred.
-62	N	I didn't want Fred to do it, let alone Sue. 	It would be even less preferable for Fred to do it than Sue.
-63	Y	Louise surely didn't understand it, let alone Susan. 	Louise was more likely to understand it than Susan.
-64	N	Louise surely didn't understand it, let alone Susan. 	Susan was more likely to understand it than Louise.
-65	Y	I bet Louise, let alone Susan, couldn't pass that test. 	Louise is more likely to past that test than Susan is.
-66	N	I bet Louise, let alone Susan, couldn't pass that test. 	Susan is more likely to past that test than Louise is.
-67	Y	He doesn't get up for LUNCH, let alone BREAKFAST.	He would need to get up even earlier for breakfast than for lunch.
-68	N	He doesn't get up for LUNCH, let alone BREAKFAST.	He would need to get up even earlier for lunch than for breakfast.
-69	Y	John hardly speaks RUSSIAN let alone BULGARIAN. 	It would be less likely that John speaks Bulgarian than that John speaks Russian.
-70	N	John hardly speaks RUSSIAN let alone BULGARIAN. 	It would be less likely that John speaks Russian than that John speaks Bulgarian.
-73	Y	The latest results dissolved PENUTIAN let alone didn't support MACRO-PENUTIAN.	The existence of Macro-Penutian is more contested than the existence of Penutian.
-74	N	The latest results dissolved PENUTIAN let alone didn't support MACRO-PENUTIAN.	The existence of Penutian is more contested than the existence of Macro-Penutian.
-75	Y	He didn't reach DENVER, let alone CHICAGO. 	He was further away from Chicago than Denver.
-76	N	He didn't reach DENVER, let alone CHICAGO. 	He was further away from Denver than Chicago.
-77	Y	I'm too tired to GET UP, let alone GO RUNNING with you. 	Going running would require more energy than getting up.
-78	N	I'm too tired to GET UP, let alone GO RUNNING with you. 	Getting up would require more energy than going running.
-79	Y	She gave me more candy than I could CARRY, let alone EAT.	I could carry more candy than I could eat.
-80	N	She gave me more candy than I could CARRY, let alone EAT.	I could eat more candy than I could carry.
-81	Y	Only a linguist would BUY that book, let alone READ it. 	Reading that book is less likely than buying it.
-82	N	Only a linguist would BUY that book, let alone READ it. 	Buying that book is less likely than reading it.
-83	Y	I barely got up in time for LUNCH, let alone BREAKFAST. 	I needed to get up earlier for breakfast than for lunch.
-84	N	I barely got up in time for LUNCH, let alone BREAKFAST. 	I needed to get up earlier for lunch than for breakfast.
-85	Y	I had all I could do to get out of BED, let alone do my morning CALISTHENICS.	Doing my morning calisthenics requires more energy than getting out of bed.
-86	N	I had all I could do to get out of BED, let alone do my morning CALISTHENICS.	Getting out of bed requires more energy than doing my morning calisthenics.
-87	Y	 It would surprise me if JOHN could pass the test, let alone BILL. 	John would be more likely to pass the test than Bill.
-88	N	 It would surprise me if JOHN could pass the test, let alone BILL. 	Bill would be more likely to pass the test than John.
-89	Y	He failed to reach the sixth GRADE, let alone get a B.A. 	Getting a B.A. requires more schooling than reaching sixth grade.
-90	N	He failed to reach the sixth GRADE, let alone get a B.A. 	Reaching sixth grade requires more schooling than getting a B.A.
-91	Y	Anyone who'd been to HIGH SCHOOL, let alone GRADUATE students in MATH, should be able to solve that problem.	Graduate students in math should have a greater ability to solve that poroblem than anyone who'd been to high school.
-92	N	Anyone who'd been to HIGH SCHOOL, let alone GRADUATE students in MATH, should be able to solve that problem.	Anyone who'd been to high school should have a greater ability to solve that problem than graduate students in math.
-93	Y	You've got enough material there for a whole SEMESTER, let alone a WEEK.	You need more material for a semester than a week.
-94	N	You've got enough material there for a whole SEMESTER, let alone a WEEK.	You need more material for a week than a semester.
-95	Y	PENUTIAN has been broken up, let alone MACRO-Penutian.	Breaking up Penutian requires breaking up Macro-Penutian
-96	N	PENUTIAN has been broken up, let alone MACRO-Penutian.	Breaking up Macro-Penutian requires breaking up Penutian.
-99	Y	You'd never get a poor man to wash a car for $2 in bad times, let alone a rich man to wax a truck for $1 in prosperous times.	It's more likely you could get a poor man to wash a car for $2 in prosperous times than you could get a rich man to wax a truck for $1 in prosperous times.
-100	N	You'd never get a poor man to wash a car for $2 in bad times, let alone a rich man to wax a truck for $1 in prosperous times.	It's more likely you could get a rich man to wax a truck for $1 in prosperous times than you could get a poor man to wash a car for $2 in prosperous times.
-101	Y	You'd never get a poor man, let alone a rich man, to wash, let alone wax, a car, let alone a truck, for $2, let alone $1, in bad times, let alone in prosperous times.	It's more likely you could get a poor man to wash a car for $2 in prosperous times than you could get a rich man to wax a truck for $1 in prosperous times.
-102	N	You'd never get a poor man, let alone a rich man, to wash, let alone wax, a car, let alone a truck, for $2, let alone $1, in bad times, let alone in prosperous times.	It's more likely you could get a rich man to wax a truck for $1 in prosperous times than you could get a poor man to wash a car for $2 in prosperous times.
-103	Y	You couldn't get a poor man to wash your car for two dollars, let alone a rich man to wax your truck for one dollar.	It's even less likely that you could get a rich man to wax your truck for one dollar than that you could get a poor man to wash your car for two dollars.
-104	N	You couldn't get a poor man to wash your car for two dollars, let alone a rich man to wax your truck for one dollar.	It's even less likely that you could get a poor man to wash your car for two dollars than that you could get a rich man to wax your truck for one dollar.
-105	Y	You couldn't get a poor man, let alone a rich man, to wash, let alone wax, your car, let alone your truck, for two dollars, let alone for one dollar.	It's even less likely that you could get a rich man to wax your truck for one dollar than that you could get a poor man to wash your car for two dollars.
-106	N	You couldn't get a poor man, let alone a rich man, to wash, let alone wax, your car, let alone your truck, for two dollars, let alone for one dollar.	It's even less likely that you could get a poor man to wash your car for two dollars than that you could get a rich man to wax your truck for one dollar.
-107	Y	You'll never get Gorbachev to denounce communism, let alone Reagan to denounce capitalism.	Getting Reagan to denounce capitalism would be even more difficult than getting Gorbachev to denounce communism.
-108	N	You'll never get Gorbachev to denounce communism, let alone Reagan to denounce capitalism.	Getting Gorbachev to denouce communism would be even more challenging than getting Reagan to denounce capitalism.
-111	Y	A poor man, let alone a rich man, wouldn't wash your car for $2, let alone wax your truck for $1.	It's even less likely that you could get a rich man to wax your truck for $1 than that you could get a poor man to wash your car for $2.
-112	N	A poor man, let alone a rich man, wouldn't wash your car for $2, let alone wax your truck for $1.	It's even less likely that you could get a poor man to wash your car for $2 than that you could get a rich man to wax your truck for $1.
-113	Y	A poor man wouldn't wash your car, let alone a rich man wax your truck, for $2, let alone for $1.	It's even less likely that you could get a rich man to wax your truck for $1 than that you could get a poor man to wash your car for $2.
-114	N	A poor man wouldn't wash your car, let alone a rich man wax your truck, for $2, let alone for $1.	It's even less likely that you could get a poor man to wash your car for $2 than that you could get a rich man to wax your truck for $1.
-115	Y	A poor man wouldn't wash, let alone a rich man wax, your car for $2, let alone your truck for $1.	It's even less likely that you could get a rich man to wax your truck for $1 than that you could get a poor man to wash your car for $2.
-116	N	A poor man wouldn't wash, let alone a rich man wax, your car for $2, let alone your truck for $1.	It's even less likely that you could get a poor man to wash your car for $2 than that you could get a rich man to wax your truck for $1.
-117	Y	A poor man wouldn't wash your car for $2, let alone a rich man wax your truck for $1.	Getting a poor man to wash your car for $2 is more likely than getting a rich man to wax your truck for $1.
-118	N	A poor man wouldn't wash your car for $2, let alone a rich man wax your truck for $1.	Getting a rich man to wax your truck for $1 is more likely than getting a poor man to wash your car for $2.
-119	Y	Fred, let alone Louise, wouldn't order shrimp, let alone squid, at Jack-In-The-Box. 	It was even less likely that Fred would order shrimp at Jack-In-The-Box than Louise would order squid at Jack-In-The-Box.
-120	N	Fred, let alone Louise, wouldn't order shrimp, let alone squid, at Jack-In-The-Box. 	It was even less likely that Louise would order squid at Jack-In-The-Box than Fred would order shrimp at Jack-In-The-Box.
-121	Y	You could never get Fred to eat SHRIMP at Jack-in-the-Box let alone SQUID.	It would be more challenging for you to get Fred to eat squid at Jack-in-the-Box than it would be for you to get him to eat shrimp at Jack-in-the-Box.
-122	N	You could never get Fred to eat SHRIMP at Jack-in-the-Box let alone SQUID.	It would be more challenging for you to get Fred to eat shrimp at Jack-in-the-Box than it would be for you to get him to eat squid at Jack-in-the-Box.
-123	Y	Fred won't eat shrimp at Jack-in-the-Box, let alone squid. 	For Fred, eating squid at Jack-in-the-Box is even less appealing than eating shrimp at Jack-in-the-Box.
-124	N	Fred won't eat shrimp at Jack-in-the-Box, let alone squid. 	For Fred, eating shrimp at Jack-in-the-Box is even less appealing than eating squid at Jack-in-the-Box.
-125	Y	He's not even 18, let alone 21	He was closer in age to 18 than he was to 21.
-126	N	He's not even 18, let alone 21	He was closer in age to 21 than he was to 18.
-127	Y	He isn't heavy enough to play QUARTERBACK, let alone TACKLE.	He would need to be heavier to play tackle than he would need to be to play quarterback.
-128	N	He isn't heavy enough to play QUARTERBACK, let alone TACKLE.	He would need to be heavier to play quarterback than he would need to be to play tackle.
-129	Y	 This water isn't hot enough to WASH DISHES, let alone MAKE TEA.	Water must be hotter in order to make tea than to wash dishes.
-130	N	 This water isn't hot enough to WASH DISHES, let alone MAKE TEA.	Water must be hotter in order to wash dishes than to make tea.
-131	Y	A GROWN MAN couldn't LIFT this boulder, let alone a CHILD TOSS it SIX FEET.	It is more likely that a grown man could lift this boulder than a child could toss it six feet.
-132	N	A GROWN MAN couldn't LIFT this boulder, let alone a CHILD TOSS it SIX FEET.	It is more likely that a child could toss this boulder six feet than a grown man could lift it.
-133	Y	There's no chance she's even gonna LOOK at me, let alone REMEMBER my NAME.	It would be even more surprising if she remembered my name than if she looked at me.
-134	N	There's no chance she's even gonna LOOK at me, let alone REMEMBER my NAME.	It would be even more surprising if she looked at me than if she remembered my name.
-135	Y	MEG wasn't born in 1941, let alone her DAUGHTER.	Meg is older than her daughter.
-136	N	MEG wasn't born in 1941, let alone her DAUGHTER.	Her daughter is older than Meg.
-137	Y	She didn't get to BERLIN let alone WARSAW.	She was further away from Warsaw than she was from Berlin.
-138	N	She didn't get to BERLIN let alone WARSAW.	She was further away from Berlin than she was from Warsaw.
-139	Y	She didn't get to WARSAW let alone BERLIN.	She was closer to Warsaw than Berlin.
-140	N	She didn't get to WARSAW let alone BERLIN.	She was closer to Berlin than Warsaw.
-141	Y	She's not even in the $30,000 a year category, let alone the $60,000 a year category.	She was closer to being in the $30,000 a year category than she was to being in the $60,000 a year category.
-142	N	She's not even in the $30,000 a year category, let alone the $60,000 a year category.	She was closer to being in the $60,000 a year category than she was to being in the $30,000 a year category.
-143	Y	She's not even in the $6000 a year category, let alone the $3000 a year category.	She was closer to being in the $6,000 a year category than she was to being in the $3,000 a year category.
-144	N	She's not even in the $6000 a year category, let alone the $3000 a year category.	She was closer to being in the $3,000 a year category than she was to being in the $6,000 a year category.
-145	Y	Fred doesn't have an ODD NUMBER of books, let alone SEVENTY-FIVE.	Fred having seventy-five books would be even less likely than him having an odd number of books.
-146	N	Fred doesn't have an ODD NUMBER of books, let alone SEVENTY-FIVE.	Fred having an odd number of books would be even less likely than him having seventy-five books.
-147	Y	He didn't even have an ODD NUMBER, let alone SEVENTY-FIVE. 	He was even less likely to have seventy-five books than he was to have an odd number of books.
-148	N	He didn't even have an ODD NUMBER, let alone SEVENTY-FIVE. 	He was even less likely to have an odd number of books than he was to have seventy-five books.
-149	Y	He wasn't even a COMMISSIONED OFFICER, let alone a COLONEL.	Making Colonel is even more difficult than becoming a comissioned officer.
-150	N	He wasn't even a COMMISSIONED OFFICER, let alone a COLONEL.	Becoming a comissioned officer is even more difficult than making Colonel.
-157	Y	He barely reached Denver let alone Chicago. 	He was further away from Chicago than he was from Denver.
-158	N	He barely reached Denver let alone Chicago. 	He was further away from Denver than he was from Chicago.
-159	Y	You'd never get a poor man to wash a car for $2 in bad times, let alone a rich man to wax a truck for $1 in prosperous times.	It's even less likely that you could get a rich man to wax a truck for $1 in prosperous times than you could get a poor man to wash a car for $2 in bad times.
-160	N	You'd never get a poor man to wash a car for $2 in bad times, let alone a rich man to wax a truck for $1 in prosperous times.	It's even less likely that you could get a poor man to wash a far for $2 in bad times than you could get a rich man to wax a truck for $1 in prosperous times.
-161	Y	You couldn't get a poor man to wash your car for $2, let alone a rich man to wax your truck for $1.	It's even less likely that you could get a rich man to wax your truck for $1 than that you could get a poor man to wash your car for $2.
-162	N	You couldn't get a poor man to wash your car for $2, let alone a rich man to wax your truck for $1.	It's even less likely that you could get a poor man to wash your car for $2 than that you could get a rich man to wax your truck for $1.
-169	Y	I didn't have time to FEED the CHILDREN, let alone PREPARE my LECTURE.	Feeding the children would be prioritized over preparing my lecture.
-170	N	I didn't have time to FEED the CHILDREN, let alone PREPARE my LECTURE.	Preparing my lecture would be prioritized over feeding the children.
-171	Y	I didn't get up in time to EAT my LUNCH, let alone COOK my BREAKFAST.	I would need to get up earlier to cook my breakfast than I would too eat my lunch.
-172	N	I didn't get up in time to EAT my LUNCH, let alone COOK my BREAKFAST.	I would need to get up earlier to eat my lunch than I would to cook my breakfast.
-173	Y	I didn't get up in time to COOK my LUNCH, let alone EAT my BREAKFAST.	I would need to get up earlier to eat my breakfast than I would to cook my lunch.
-174	N	I didn't get up in time to COOK my LUNCH, let alone EAT my BREAKFAST.	I would need to get up earlier to cook my lunch than I would to eat my breakfast.
-175	Y	General Shotwell said that in the Grenada affair not enough Cubans were wiped out to make it worthwhile to open a bottle of champagne, let alone put on a proper banquet for the Joint Chiefs of Staff.	Putting on a proper banquet for the Joint Chiefs of Staff would be a larger celebration than opening a bottle of champagne. 
-176	N	General Shotwell said that in the Grenada affair not enough Cubans were wiped out to make it worthwhile to open a bottle of champagne, let alone put on a proper banquet for the Joint Chiefs of Staff.	Opening a bottle of champagne would be a larger celebration than putting on a proper banquet for the Joint Chiefs of Staff.
+1	Y	I barely got up in time to eat lunch, let alone cook breakfast.	I would have needed to get up earlier in order to cook breakfast than to eat lunch.
+1	N	I barely got up in time to eat lunch, let alone cook breakfast.	I would have needed to get up earlier in order to eat lunch than to cook breakfast.
+2	Y	I doubt you could get Fred to eat shrimp, let alone Louise squid.	It would probably be more challenging to get Fred to eat shrimp than to get Louise to eat squid.
+2	N	I doubt you could get Fred to eat shrimp, let alone Louise squid.	It would probably be more challenging to get Louise to eat squid than to get Fred to eat shrimp.
+3	Y	I was too young to serve in World War Two, let alone World War One.	I would've needed to be even older to have served in World War One than to have served in World War Two.
+3	N	I was too young to serve in World War Two, let alone World War One.	I would've needed to be even older to have served in World War Two than to have served in World War One.
+4	Y	Look, around here you can get arrested for going barefoot, let alone for walking around naked.	Going barefoot is generally less likely to be a crime than walking around naked.
+4	N	Look, around here you can get arrested for going barefoot, let alone for walking around naked.	Walking around naked is generally less likely to be a crime than going barefoot.
+5	Y	Don't worry. Little Seymour's parents let him drink whiskey, let alone coke.	Allowing a child to drink whiskey is more lenient than allowing a child to drink Coke.
+5	N	Don't worry. Little Seymour's parents let him drink whiskey, let alone coke.	Allowing a child to drink Coke is more lenient than allowing a child to drink whiskey.
+6	Y	I doubt you could get Fred to eat squid, let alone Louise.	Louise is even less likely to eat squid than Fred is.
+6	N	I doubt you could get Fred to eat squid, let alone Louise.	Fred is even less likely to eat squid than Louise is.
+7	Y	I doubt you could get Fred, let alone Louise, to eat squid.	Louise is even less likely to eat squid than Fred is.
+7	N	I doubt you could get Fred, let alone Louise, to eat squid.	Fred is even less likely to eat squid than Louise is.
+8	Y	My observations warrant the inference that Fred will not eat shrimp, let alone squid.	Fred is even less likely to eat squid than he is to eat shrimp.
+8	N	My observations warrant the inference that Fred will not eat shrimp, let alone squid.	Fred is even less likely to eat shrimp than he is to eat squid. 
+9	Y	I doubt he made Colonel in World War II, let alone General.	It is even less likely that he made General in World War Two than he made Colonel.
+9	N	I doubt he made Colonel in World War II, let alone General.	It is even less likely that he made Colonel in World War Two than he made General.
+10	Y	He doesn't like shrimp, let alone squid.	Liking shrimp is more common than liking squid.
+10	N	He doesn't like shrimp, let alone squid.	Liking squid is more common than liking shrimp.
+11	Y	Who could imagine such a thing, let alone do it?	Doing such a thing would be even more unbelievable than imagining it.
+11	N	Who could imagine such a thing, let alone do it?	Imagining such a thing would be even more unbelievable than doing it.
+12	Y	I don't even want to read an article about, let alone a book written by, that swine.	I would want to read a book written by that swine even less than I would want to read an article about them.
+12	N	I don't even want to read an article about, let alone a book written by, that swine.	I would want to read an article about that swine even less than I would want to read a book written by them.
+13	Y	You couldn't get John to touch it, let alone Lucille to eat it.	Getting Lucille to eat it would be even more challenging than getting John to touch it.
+13	N	You couldn't get John to touch it, let alone Lucille to eat it.	Getting John to touch it would be even more challenging than getting Lucille to eat it
+14	Y	Max won't eat shrimp, let alone squid.	Max is even less likely to eat squid than he is to eat shrimp.
+14	N	Max won't eat shrimp, let alone squid.	Max is even less likely to eat shrimp than he is to eat squid.
+15	Y	Max won't touch the shrimp, let alone clean the squid.	Max is even less willing to clean the squid than he is to touch the shrimp.
+15	N	Max won't touch the shrimp, let alone clean the squid.	Max is even less willing to touch the shrimp than he is to touch the squid.
+16	Y	They couldn't make John eat the shrimp, let alone Lucille the squid.	Getting John to eat the shrimp would be easier than getting Lucille to eat the squid.
+16	N	They couldn't make John eat the shrimp, let alone Lucille the squid.	Getting Lucille to eat squid would be easier than getting John to eat the shrimp.
+17	Y	He wouldn't give a nickel to his mother, let alone ten dollars to a complete stranger.	He is less likely to give ten dollars to a complete stranger than he is to give a nickel to his mother.
+17	N	He wouldn't give a nickel to his mother, let alone ten dollars to a complete stranger.	He is less likely to give a nickel to his mother than he is to give ten dollars to a complete stranger. 
+18	Y	Shrimp Moishe won't eat, let alone squid.	Moishe is less likely to eat squid than shrimp.
+18	N	Shrimp Moishe won't eat, let alone squid.	Moishe is less likely to eat shrimp than squid.
+19	Y	They've broken up Penutian, let alone Macro-Penutian. 	Breaking up Penutian is more fine-grained than breaking up Macro-Penutian.
+19	N	They've broken up Penutian, let alone Macro-Penutian. 	Breaking up Macro-Penutian is more fine-grained than breaking up Penutian.
+20	Y	Penutian they've broken up, let alone Macro-Penutian. 	Breaking up Penutian is more fine-grained than breaking up Macro-Penutian.
+20	N	Penutian they've broken up, let alone Macro-Penutian. 	Breaking up Macro-Penutian is more fine-grained than breaking up Penutian.
+21	Y	Max won't eat shrimp, let alone Rabbi Feldstein. 	Rabbi Feldstein is even less likely to eat shrimp than Max is.
+21	N	Max won't eat shrimp, let alone Rabbi Feldstein. 	Max is even less likely to eat shrimp than Rabbi Feldstein is.
+22	Y	Minnie wasn't born by 1941, let alone Meg. 	Minnie is older than Meg.
+22	N	Minnie wasn't born by 1941, let alone Meg. 	Meg is older than Minnie.
+23	Y	John won't do it for you, let alone Bill. 	Bill is even less likely to do it for you than John is.
+23	N	John won't do it for you, let alone Bill. 	John is even less likely to do it for you than Bill is.
+24	Y	John wasn't there, let alone Louise.	It was more likely that John would be there than Louise.
+24	N	John wasn't there, let alone Louise.	It was more likely that Louise would be there than John.
+25	Y	I didn't want Fred to do it, let alone Sue. 	It would be even less preferable for Sue to do it than Fred.
+25	N	I didn't want Fred to do it, let alone Sue. 	It would be even less preferable for Fred to do it than Sue.
+26	Y	Louise surely didn't understand it, let alone Susan. 	Louise was more likely to understand it than Susan.
+26	N	Louise surely didn't understand it, let alone Susan. 	Susan was more likely to understand it than Louise.
+27	Y	I bet Louise, let alone Susan, couldn't pass that test. 	Louise is more likely to past that test than Susan is.
+27	N	I bet Louise, let alone Susan, couldn't pass that test. 	Susan is more likely to past that test than Louise is.
+28	Y	He doesn't get up for lunch, let alone breakfast.	He would need to get up even earlier for breakfast than for lunch.
+28	N	He doesn't get up for lunch, let alone breakfast.	He would need to get up even earlier for lunch than for breakfast.
+29	Y	John hardly speaks Russian let alone Bulgarian. 	It would be less likely that John speaks Bulgarian than that John speaks Russian.
+29	N	John hardly speaks Russian let alone Bulgarian. 	It would be less likely that John speaks Russian than that John speaks Bulgarian.
+30	Y	The latest results dissolved Penutian let alone didn't support Macro-Penutian.	The existence of Macro-Penutian is more contested than the existence of Penutian.
+30	N	The latest results dissolved Penutian let alone didn't support Macro-Penutian.	The existence of Penutian is more contested than the existence of Macro-Penutian.
+31	Y	He didn't reach Denver, let alone Chicago. 	He was further away from Chicago than Denver.
+31	N	He didn't reach Denver, let alone Chicago. 	He was further away from Denver than Chicago.
+32	Y	I'm too tired to get up, let alone go running with you. 	Going running would require more energy than getting up.
+32	N	I'm too tired to get up, let alone go running with you. 	Getting up would require more energy than going running.
+33	Y	She gave me more candy than I could carry, let alone eat.	I could carry more candy than I could eat.
+33	N	She gave me more candy than I could carry, let alone eat.	I could eat more candy than I could carry.
+34	Y	Only a linguist would buy that book, let alone read it. 	Reading that book is less likely than buying it.
+34	N	Only a linguist would buy that book, let alone read it. 	Buying that book is less likely than reading it.
+35	Y	I barely got up in time for lunch, let alone breakfast. 	I needed to get up earlier for breakfast than for lunch.
+35	N	I barely got up in time for lunch, let alone breakfast. 	I needed to get up earlier for lunch than for breakfast.
+36	Y	I had all I could do to get out of bed, let alone do my morning calisthenics.	Doing my morning calisthenics requires more energy than getting out of bed.
+36	N	I had all I could do to get out of bed, let alone do my morning calisthenics.	Getting out of bed requires more energy than doing my morning calisthenics.
+37	Y	 It would surprise me if John could pass the test, let alone Bill. 	John would be more likely to pass the test than Bill.
+37	N	 It would surprise me if John could pass the test, let alone Bill. 	Bill would be more likely to pass the test than John.
+38	Y	He failed to reach the sixth grade, let alone get a B.A. 	Getting a B.A. requires more schooling than reaching sixth grade.
+38	N	He failed to reach the sixth grade, let alone get a B.A. 	Reaching sixth grade requires more schooling than getting a B.A.
+39	Y	Anyone who'd been to high school, let alone graduate students in math, should be able to solve that problem.	Graduate students in math should have a greater ability to solve that poroblem than anyone who'd been to high school.
+39	N	Anyone who'd been to high school, let alone graduate students in math, should be able to solve that problem.	Anyone who'd been to high school should have a greater ability to solve that problem than graduate students in math.
+40	Y	You've got enough material there for a whole semester, let alone a week.	You need more material for a semester than a week.
+40	N	You've got enough material there for a whole semester, let alone a week.	You need more material for a week than a semester.
+41	Y	Penutian has been broken up, let alone Macro-Penutian.	Breaking up Penutian requires breaking up Macro-Penutian
+41	N	Penutian has been broken up, let alone Macro-Penutian.	Breaking up Macro-Penutian requires breaking up Penutian.
+42	Y	You'd never get a poor man to wash a car for $2 in bad times, let alone a rich man to wax a truck for $1 in prosperous times.	It's more likely you could get a poor man to wash a car for $2 in prosperous times than you could get a rich man to wax a truck for $1 in prosperous times.
+42	N	You'd never get a poor man to wash a car for $2 in bad times, let alone a rich man to wax a truck for $1 in prosperous times.	It's more likely you could get a rich man to wax a truck for $1 in prosperous times than you could get a poor man to wash a car for $2 in prosperous times.
+43	Y	You'd never get a poor man, let alone a rich man, to wash, let alone wax, a car, let alone a truck, for $2, let alone $1, in bad times, let alone in prosperous times.	It's more likely you could get a poor man to wash a car for $2 in prosperous times than you could get a rich man to wax a truck for $1 in prosperous times.
+43	N	You'd never get a poor man, let alone a rich man, to wash, let alone wax, a car, let alone a truck, for $2, let alone $1, in bad times, let alone in prosperous times.	It's more likely you could get a rich man to wax a truck for $1 in prosperous times than you could get a poor man to wash a car for $2 in prosperous times.
+44	Y	You couldn't get a poor man to wash your car for two dollars, let alone a rich man to wax your truck for one dollar.	It's even less likely that you could get a rich man to wax your truck for one dollar than that you could get a poor man to wash your car for two dollars.
+44	N	You couldn't get a poor man to wash your car for two dollars, let alone a rich man to wax your truck for one dollar.	It's even less likely that you could get a poor man to wash your car for two dollars than that you could get a rich man to wax your truck for one dollar.
+45	Y	You couldn't get a poor man, let alone a rich man, to wash, let alone wax, your car, let alone your truck, for two dollars, let alone for one dollar.	It's even less likely that you could get a rich man to wax your truck for one dollar than that you could get a poor man to wash your car for two dollars.
+45	N	You couldn't get a poor man, let alone a rich man, to wash, let alone wax, your car, let alone your truck, for two dollars, let alone for one dollar.	It's even less likely that you could get a poor man to wash your car for two dollars than that you could get a rich man to wax your truck for one dollar.
+46	Y	You'll never get Gorbachev to denounce communism, let alone Reagan to denounce capitalism.	Getting Reagan to denounce capitalism would be even more difficult than getting Gorbachev to denounce communism.
+46	N	You'll never get Gorbachev to denounce communism, let alone Reagan to denounce capitalism.	Getting Gorbachev to denouce communism would be even more challenging than getting Reagan to denounce capitalism.
+47	Y	A poor man, let alone a rich man, wouldn't wash your car for $2, let alone wax your truck for $1.	It's even less likely that you could get a rich man to wax your truck for $1 than that you could get a poor man to wash your car for $2.
+47	N	A poor man, let alone a rich man, wouldn't wash your car for $2, let alone wax your truck for $1.	It's even less likely that you could get a poor man to wash your car for $2 than that you could get a rich man to wax your truck for $1.
+48	Y	A poor man wouldn't wash your car, let alone a rich man wax your truck, for $2, let alone for $1.	It's even less likely that you could get a rich man to wax your truck for $1 than that you could get a poor man to wash your car for $2.
+48	N	A poor man wouldn't wash your car, let alone a rich man wax your truck, for $2, let alone for $1.	It's even less likely that you could get a poor man to wash your car for $2 than that you could get a rich man to wax your truck for $1.
+49	Y	A poor man wouldn't wash, let alone a rich man wax, your car for $2, let alone your truck for $1.	It's even less likely that you could get a rich man to wax your truck for $1 than that you could get a poor man to wash your car for $2.
+49	N	A poor man wouldn't wash, let alone a rich man wax, your car for $2, let alone your truck for $1.	It's even less likely that you could get a poor man to wash your car for $2 than that you could get a rich man to wax your truck for $1.
+50	Y	A poor man wouldn't wash your car for $2, let alone a rich man wax your truck for $1.	Getting a poor man to wash your car for $2 is more likely than getting a rich man to wax your truck for $1.
+50	N	A poor man wouldn't wash your car for $2, let alone a rich man wax your truck for $1.	Getting a rich man to wax your truck for $1 is more likely than getting a poor man to wash your car for $2.
+51	Y	Fred, let alone Louise, wouldn't order shrimp, let alone squid, at Jack-In-The-Box. 	It was even less likely that Fred would order shrimp at Jack-In-The-Box than Louise would order squid at Jack-In-The-Box.
+51	N	Fred, let alone Louise, wouldn't order shrimp, let alone squid, at Jack-In-The-Box. 	It was even less likely that Louise would order squid at Jack-In-The-Box than Fred would order shrimp at Jack-In-The-Box.
+52	Y	You could never get Fred to eat shrimp at Jack-in-the-Box let alone squid.	It would be more challenging for you to get Fred to eat squid at Jack-in-the-Box than it would be for you to get him to eat shrimp at Jack-in-the-Box.
+52	N	You could never get Fred to eat shrimp at Jack-in-the-Box let alone squid.	It would be more challenging for you to get Fred to eat shrimp at Jack-in-the-Box than it would be for you to get him to eat squid at Jack-in-the-Box.
+53	Y	Fred won't eat shrimp at Jack-in-the-Box, let alone squid. 	For Fred, eating squid at Jack-in-the-Box is even less appealing than eating shrimp at Jack-in-the-Box.
+53	N	Fred won't eat shrimp at Jack-in-the-Box, let alone squid. 	For Fred, eating shrimp at Jack-in-the-Box is even less appealing than eating squid at Jack-in-the-Box.
+54	Y	He's not even 18, let alone 21	He was closer in age to 18 than he was to 21.
+54	N	He's not even 18, let alone 21	He was closer in age to 21 than he was to 18.
+55	Y	He isn't heavy enough to play quarterback, let alone tackle.	He would need to be heavier to play tackle than he would need to be to play quarterback.
+55	N	He isn't heavy enough to play quarterback, let alone tackle.	He would need to be heavier to play quarterback than he would need to be to play tackle.
+56	Y	 This water isn't hot enough to wash dishes, let alone make tea.	Water must be hotter in order to make tea than to wash dishes.
+56	N	 This water isn't hot enough to wash dishes, let alone make tea.	Water must be hotter in order to wash dishes than to make tea.
+57	Y	A grown man couldn't lift this boulder, let alone a child toss it six feet.	It is more likely that a grown man could lift this boulder than a child could toss it six feet.
+57	N	A grown man couldn't lift this boulder, let alone a child toss it six feet.	It is more likely that a child could toss this boulder six feet than a grown man could lift it.
+58	Y	There's no chance she's even gonna look at me, let alone remember my name.	It would be even more surprising if she remembered my name than if she looked at me.
+58	N	There's no chance she's even gonna look at me, let alone remember my name.	It would be even more surprising if she looked at me than if she remembered my name.
+59	Y	Meg wasn't born in 1941, let alone her daughter.	Meg is older than her daughter.
+59	N	Meg wasn't born in 1941, let alone her daughter.	Her daughter is older than Meg.
+60	Y	She didn't get to Berlin let alone Warsaw.	She was further away from Warsaw than she was from Berlin.
+60	N	She didn't get to Berlin let alone Warsaw.	She was further away from Berlin than she was from Warsaw.
+61	Y	She didn't get to Warsaw let alone Berlin.	She was closer to Warsaw than Berlin.
+61	N	She didn't get to Warsaw let alone Berlin.	She was closer to Berlin than Warsaw.
+62	Y	She's not even in the $30,000 a year category, let alone the $60,000 a year category.	She was closer to being in the $30,000 a year category than she was to being in the $60,000 a year category.
+62	N	She's not even in the $30,000 a year category, let alone the $60,000 a year category.	She was closer to being in the $60,000 a year category than she was to being in the $30,000 a year category.
+63	Y	She's not even in the $6000 a year category, let alone the $3000 a year category.	She was closer to being in the $6,000 a year category than she was to being in the $3,000 a year category.
+63	N	She's not even in the $6000 a year category, let alone the $3000 a year category.	She was closer to being in the $3,000 a year category than she was to being in the $6,000 a year category.
+64	Y	Fred doesn't have an odd number of books, let alone seventy-five.	Fred having seventy-five books would be even less likely than him having an odd number of books.
+64	N	Fred doesn't have an odd number of books, let alone seventy-five.	Fred having an odd number of books would be even less likely than him having seventy-five books.
+65	Y	He didn't even have an odd number, let alone seventy-five. 	He was even less likely to have seventy-five books than he was to have an odd number of books.
+65	N	He didn't even have an odd number, let alone seventy-five. 	He was even less likely to have an odd number of books than he was to have seventy-five books.
+66	Y	He wasn't even a commissioned officer, let alone a colonel.	Making Colonel is even more difficult than becoming a comissioned officer.
+66	N	He wasn't even a commissioned officer, let alone a colonel.	Becoming a comissioned officer is even more difficult than making Colonel.
+67	Y	He barely reached Denver let alone Chicago. 	He was further away from Chicago than he was from Denver.
+67	N	He barely reached Denver let alone Chicago. 	He was further away from Denver than he was from Chicago.
+68	Y	You'd never get a poor man to wash a car for $2 in bad times, let alone a rich man to wax a truck for $1 in prosperous times.	It's even less likely that you could get a rich man to wax a truck for $1 in prosperous times than you could get a poor man to wash a car for $2 in bad times.
+68	N	You'd never get a poor man to wash a car for $2 in bad times, let alone a rich man to wax a truck for $1 in prosperous times.	It's even less likely that you could get a poor man to wash a far for $2 in bad times than you could get a rich man to wax a truck for $1 in prosperous times.
+69	Y	You couldn't get a poor man to wash your car for $2, let alone a rich man to wax your truck for $1.	It's even less likely that you could get a rich man to wax your truck for $1 than that you could get a poor man to wash your car for $2.
+69	N	You couldn't get a poor man to wash your car for $2, let alone a rich man to wax your truck for $1.	It's even less likely that you could get a poor man to wash your car for $2 than that you could get a rich man to wax your truck for $1.
+70	Y	I didn't have time to feed the children, let alone prepare my lecture.	Feeding the children would be prioritized over preparing my lecture.
+70	N	I didn't have time to feed the children, let alone prepare my lecture.	Preparing my lecture would be prioritized over feeding the children.
+71	Y	I didn't get up in time to eat my lunch, let alone cook my breakfast.	I would need to get up earlier to cook my breakfast than I would too eat my lunch.
+71	N	I didn't get up in time to eat my lunch, let alone cook my breakfast.	I would need to get up earlier to eat my lunch than I would to cook my breakfast.
+72	Y	I didn't get up in time to cook my lunch, let alone eat my breakfast.	I would need to get up earlier to eat my breakfast than I would to cook my lunch.
+72	N	I didn't get up in time to cook my lunch, let alone eat my breakfast.	I would need to get up earlier to cook my lunch than I would to eat my breakfast.
+73	Y	General Shotwell said that in the Grenada affair not enough Cubans were wiped out to make it worthwhile to open a bottle of champagne, let alone put on a proper banquet for the Joint Chiefs of Staff.	Putting on a proper banquet for the Joint Chiefs of Staff would be a larger celebration than opening a bottle of champagne. 
+73	N	General Shotwell said that in the Grenada affair not enough Cubans were wiped out to make it worthwhile to open a bottle of champagne, let alone put on a proper banquet for the Joint Chiefs of Staff.	Opening a bottle of champagne would be a larger celebration than putting on a proper banquet for the Joint Chiefs of Staff.
