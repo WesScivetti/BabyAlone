@@ -1,9 +1,243 @@
+from argparse import ArgumentParser
+from collections import defaultdict
+import glob
+from itertools import chain
+import numpy as np
 import pandas as pd
+from tokenizers import ByteLevelBPETokenizer
+import torch
+from transformers import PreTrainedTokenizerFast, AutoTokenizer, OPTConfig, OPTForCausalLM, TrainingArguments, Trainer, set_seed
+from minicons import scorer
+import re
+
 
 def load_perp_dataset(input_file):
     """
     loads in the let-alone data that will be put into the correct format for reading into the model.
     """
     df = pd.read_csv(input_file, sep="\t")
-    print(df.head())
+    return df
+
+
+def avg_surprisal_minicons(model, tokenizer, context_list, stimuli_list):
+    """
+    calculates the surprisal using minicons
+    """
+    model = scorer.IncrementalLMScorer(model, tokenizer=tokenizer, device='cuda')
+
+    # surprisals = model.token_score(text_list, surprisal=True, base_two=True)
+    # print(surprisals)
+
+
+
+    seq_surprisal = model.conditional_score(context_list, stimuli_list, reduction = lambda x: -x.sum(0))
+    # print(seq_surprisal[0])
+    return seq_surprisal
+
+def surprisal_long_list(model, tokenizer, context_list, stimuli_list):
+    """chunks and returns surprisal of really long list
+    can't feed the whole list into minicon in one batch
+    COMPUTES CONDITIONAL LOG-PROB of stimuli based on context, but doesn't include context in average."""
+
+    chunks_context = [context_list[i:i + 64] for i in range(0, len(context_list), 64)]
+    chunks_stimuli = [stimuli_list[i:i + 64] for i in range(0, len(stimuli_list), 64)]
+    chunk_surps = []
+    for chunk_context, chunk_stimuli in zip(chunks_context, chunks_stimuli):
+        sups = avg_surprisal_minicons(model, tokenizer, chunk_context, chunk_stimuli)
+        chunk_surps.append(sups)
+    return list(chain.from_iterable(chunk_surps))
+
+def evaluate_dataset(model, tokenizer, df, output_dir, form=False):
+    """
+    evaluate the entire dataset, and then writes to output files
+    """
+    for r in df.index:
+        prem = df.loc[r,"Premise"]          #Let-alone sentence is always the "Premise"
+        hyp = df.loc[r, "Hypothesis"]       #Context is always the "Hypthoesis" - a little confusing I know
+        let_first = prem + " " + hyp        #Put context after let-alone
+        let_last = hyp + " " + prem         #put context before let-alone
+
+        let_first_reversed = re.sub("let alone", "alone let", let_first)
+        let_last_reversed = re.sub("let alone", "alone let", let_last)
+
+        #
+        # tokenized_let_first = tokenizer(let_first, return_tensors="pt")
+        # tokenized_let_last = tokenizer(let_last, return_tensors="pt")
+        #
+        #
+        #
+        # tokenized_first_reverse = tokenizer(let_first_reversed, return_tensors="pt")
+        # tokenized_last_reverse = tokenizer(let_last_reversed, return_tensors="pt")
+
+        # surp_first = avg_surprisal_minicons(model, tokenizer, let_first)
+        # surp_last = avg_surprisal_minicons(model, tokenizer, let_last)
+        #
+        # surp_first_reversed = avg_surprisal_minicons(model, tokenizer, let_first_reversed)
+        # surp_last_reversed= avg_surprisal_minicons(model, tokenizer, let_last_reversed)
+
+        df.loc[r, "Let_First"] = let_first
+        df.loc[r, "Let_Last"] = let_last
+
+        df.loc[r, "Let_First_Reversed"] = let_first_reversed
+        df.loc[r, "Let_Last_Reversed"] = let_last_reversed
+
+        # df.loc[r, "Surp_First"] = surp_first
+        # df.loc[r, "Surp_Last"] = surp_last
+        #
+        # df.loc[r, "Surp_First_Reversed"] = surp_first_reversed
+        # df.loc[r, "Surp_Last_Reversed"] = surp_last_reversed
+
+
+    prem_list = df["Premise"].tolist()
+    hyp_list = df["Hypothesis"].tolist()
+
+    #ONLY WANT LET-ALONE SECOND
+    # lf_list = df['Let_First'].tolist()
+    print("starting first surprisals")
+
+    lf_surps = surprisal_long_list(model, tokenizer, prem_list, hyp_list) #Let-alone first: let-alone is the "context"
+
+
+    #ls_list = df["Let_Last"].tolist()
+    print("starting second surprisals")
+    ls_surps = surprisal_long_list(model, tokenizer, hyp_list, prem_list) #
+
+    #
+    # lfr_list = df["Let_First_Reversed"].tolist()
+    # lfr_surps = avg_surprisal_minicons(model, tokenizer, lfr_list)
+    # lsr_list = df["Let_Last_Reversed"].tolist()
+    # lsr_surps = avg_surprisal_minicons(model, tokenizer, lsr_list)
+
+
+    # assert len(df.index) == len(lf_list)
+    # assert len(df.index) == len(ls_list)
+    # assert len(df.index) == len(lfr_list)
+    # assert len(df.index) == len(lsr_list)
+
+    for r in df.index:
+        df.loc[r, "Surp_First"] = lf_surps[r]
+        df.loc[r, "Surp_Last"] = ls_surps[r]
+
+        # df.loc[r, "Surp_First_Reversed"] = lfr_surps[r]
+        # df.loc[r, "Surp_Last_Reversed"] = lsr_surps[r]
+
+
+
+    correct_first = 0
+    correct_last = 0
+    total = 0
+
+    outdf_first = pd.DataFrame(columns=["Num", "Good Pair", "Bad Pair", "Good_Surp", "Bad_Surp", "Correct"])
+    outdf_last = pd.DataFrame(columns=["Num", "Good Pair", "Bad Pair", "Good_Surp", "Bad_Surp", "Correct"])
+
+    for r in df.index:
+        goodness = df.loc[r, "Correctness"]
+        if goodness == "Y":
+            bad_r = r + 1
+            number = df.loc[r, "Num"]
+
+            good_text_first = df.loc[r, "Let_First"]
+            good_text_last = df.loc[r, "Let_Last"]
+
+            good_surp_first = df.loc[r, "Surp_First"]
+            good_surp_last = df.loc[r, "Surp_Last"]
+
+            if not form:
+                bad_text_first = df.loc[bad_r, "Let_First"]
+                bad_text_last = df.loc[bad_r, "Let_Last"]
+
+                bad_surp_first = df.loc[bad_r, "Surp_First"]
+                bad_surp_last = df.loc[bad_r, "Surp_Last"]
+
+            if form:
+                bad_text_first = df.loc[r, "Let_First_Reversed"]
+                bad_text_last = df.loc[r, "Let_Last_Reversed"]
+
+                bad_surp_first = df.loc[r, "Surp_First_Reversed"]
+                bad_surp_last = df.loc[r, "Surp_Last_Reversed"]
+
+            if good_surp_first < bad_surp_first:
+                c_first = "Y"
+                correct_first += 1
+            else:
+                c_first = "N"
+
+            if good_surp_last < bad_surp_last:
+                c_last = "Y"
+                correct_last += 1
+            else:
+                c_last = "N"
+
+
+
+            row_first = [number, good_text_first, bad_text_first, good_surp_first.cpu(), bad_surp_first.cpu(), c_first]
+            row_last = [number, good_text_last, bad_text_last, good_surp_last.cpu(), bad_surp_last.cpu(), c_last]
+
+            outdf_first.loc[len(outdf_first.index)] = row_first
+            outdf_last.loc[len(outdf_last.index)] = row_last
+
+            total += 1
+
+
+    first_name = output_dir + "results_LA_First.tsv"
+
+    last_name = output_dir + "results_LA_Last.tsv"
+
+    outdf_first.to_csv(first_name, index=False, sep="\t")
+    outdf_last.to_csv(last_name, index=False, sep="\t")
+
+    print("CORRECT FIRST", correct_first / total)
+    print("CORRECT LAST", correct_last / total)
+
+    return
+
+def loop_checkpoints(model_dir, test_file, output_dir, form=False):
+    """
+    actually loops through the checkpoints of a model and does eval
+    """
+    chkpt_dir = model_dir + "chkpts/"
+    tokenizer_dir = model_dir + "tokenizer/"
+    checkpoint_list = glob.glob(chkpt_dir + "*/")
+    checkpoint_list = [ch for ch in checkpoint_list if "logs/" not in ch]
+    # print(checkpoint_list)
+    checkpoint_list.sort(key=lambda x: int(x.rstrip("/").split("/")[4].split("-")[1])) #sort checkpoints in order that they occured.
+
+    tokenizer = AutoTokenizer.from_pretrained(tokenizer_dir)
+    print("tokenizer loaded")
+
+    df = load_perp_dataset(test_file)
+    # test_text1 = "The block is big. This is big."
+    # test_text2 =  "The block are big. These is big."
+
+    # tokenized_test_text = tokenizer(test_text1, return_tensors="pt")
+    # tokenized_test_text2 = tokenizer(test_text2, return_tensors="pt")
+
+    for ch in checkpoint_list:
+        #print(ch)
+        ch_model = OPTForCausalLM.from_pretrained(ch)
+        #print("Checkpoint loaded.")
+        final_output_dir = output_dir + ch.split("/")[4]
+
+        print("Starting checkpoint evaluation:", ch.split("/")[4])
+        
+        evaluate_dataset(ch_model, tokenizer, df, final_output_dir, form=form)
+
+
+        print("Checkpoint evaluation finished")
+
+
+
+if __name__ == "__main__":
+    parser = ArgumentParser()
+    parser.add_argument("--model_dir")
+    parser.add_argument("--output_dir")
+    parser.add_argument("--test_file")
+    parser.add_argument("--form", action="store_true")
+
+
+    args = parser.parse_args()
+    #load_perp_dataset(args.test_file)
+    loop_checkpoints(args.model_dir, args.test_file, args.output_dir, form=args.form)
+
+
 
