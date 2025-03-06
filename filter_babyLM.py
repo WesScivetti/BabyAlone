@@ -73,6 +73,9 @@ def filter_letalone(input_dir, output_dir, related=False, all=False):
                                 print("------")
                                 filtered_counter += 1
 
+                        else:
+                            outf.write(line)
+
 
 
 
