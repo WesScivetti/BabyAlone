@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from tokenizers import ByteLevelBPETokenizer
 import torch
-from transformers import PreTrainedTokenizerFast, AutoTokenizer, OPTConfig, OPTForCausalLM, TrainingArguments, Trainer, set_seed
+from transformers import PreTrainedTokenizerFast, AutoTokenizer, OPTConfig, OPTForCausalLM, TrainingArguments, Trainer, set_seed, AutoModelForCausalLM
 from minicons import scorer
 import re
 
@@ -41,8 +41,8 @@ def surprisal_long_list(model, tokenizer, context_list, stimuli_list):
     can't feed the whole list into minicon in one batch
     COMPUTES CONDITIONAL LOG-PROB of stimuli based on context, but doesn't include context in average."""
 
-    chunks_context = [context_list[i:i + 64] for i in range(0, len(context_list), 64)]
-    chunks_stimuli = [stimuli_list[i:i + 64] for i in range(0, len(stimuli_list), 64)]
+    chunks_context = [context_list[i:i + 32] for i in range(0, len(context_list), 32)]
+    chunks_stimuli = [stimuli_list[i:i + 32] for i in range(0, len(stimuli_list), 32)]
     chunk_surps = []
     for chunk_context, chunk_stimuli in zip(chunks_context, chunks_stimuli):
         sups = avg_surprisal_minicons(model, tokenizer, chunk_context, chunk_stimuli)
@@ -236,7 +236,13 @@ def loop_checkpoints(model_dir, test_file, output_dir, form=False):
 
         print("Checkpoint evaluation finished")
 
-
+def eval_other_model(other_model, test_file, output_dir):
+    """evaluate performance of over nonBabyLM models"""
+    df = load_perp_dataset(test_file)
+    model = AutoModelForCausalLM.from_pretrained(other_model)
+    tokenizer = AutoTokenizer.from_pretrained(other_model)
+    acc = evaluate_dataset(model, tokenizer, df, output_dir, form=False)
+    print(other_model, test_file, acc)
 
 if __name__ == "__main__":
     parser = ArgumentParser()
@@ -244,11 +250,16 @@ if __name__ == "__main__":
     parser.add_argument("--output_dir")
     parser.add_argument("--test_file")
     parser.add_argument("--form", action="store_true")
+    parser.add_argument("--other_model", default=None)
 
 
     args = parser.parse_args()
     #load_perp_dataset(args.test_file)
-    loop_checkpoints(args.model_dir, args.test_file, args.output_dir, form=args.form)
+    if not args.other_model:
+        loop_checkpoints(args.model_dir, args.test_file, args.output_dir, form=args.form)
+
+    else:
+        eval_other_model(args.other_model, args.test_file, args.output_dir)
 
 
 
