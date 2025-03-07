@@ -160,9 +160,86 @@ def create_templates_meterials(output_file, swap=False, no_npi=False):
     template2 = "<X> <V> less than <Y> does."
     template2_hyp = "<Y> did not <BV>, let alone <X>."
 
+
+    template3_hyp = "<X> <V> <O>, let alone <Y>."
+    template4_hyp = "<Y> <V> <O>, let alone <X>."
+
+    template5_hyp = "<X> did not <BV> <O>, alone let <Y>."
+    template6_hyp = "<Y> did not <BV> <O>, alone let <X>."
+
     name_perms = list(itertools.permutations(names, 2))
 
+    final_combinations = list(itertools.product(name_perms, ids))
 
+    # Flatten the tuple structure for better readability
+    final_combinations = [(a1, a2, b) for (a1, a2), (b) in final_combinations]
+
+    print(final_combinations)
+
+    df = pd.DataFrame(columns=["Num", "Correctness", "Premise", "Hypothesis"])
+
+    number = 1
+
+    number = 1
+
+    for n1, n2, id in final_combinations:
+        v = verb_phrases[id]
+        bv = bare_verb_phrases[id]
+
+        t1_p = sub_template(n1, n2, "", v, bv, template1)
+        t1_h = sub_template(n1, n2, "", v, bv, template1_hyp)
+        t2_p = sub_template(n1, n2, "", v, bv, template2)
+        t2_h = sub_template(n1, n2, "", v, bv, template2_hyp)
+
+        t3_h = sub_template(n1, n2, "", v, bv, template3_hyp)
+        t4_h = sub_template(n1, n2, "", v, bv, template4_hyp)
+
+        t5_h = sub_template(n1, n2, "", v, bv, template5_hyp)
+        t6_h = sub_template(n1, n2, "", v, bv, template6_hyp)
+
+        if not swap and not no_npi:
+            row1 = [number, "Y", t1_h, t1_p]
+            df.loc[len(df.index)] = row1
+            row2 = [number, "N", t1_h, t2_p]
+            df.loc[len(df.index)] = row2
+            number += 1
+
+            row3 = [number, "Y", t2_h, t2_p]
+            df.loc[len(df.index)] = row3
+            row4 = [number, "N", t2_h, t1_p]
+            df.loc[len(df.index)] = row4
+
+            number += 1
+
+        if swap:
+            row1 = [number, "Y", t1_h, t1_p]
+            df.loc[len(df.index)] = row1
+            row2 = [number, "N", t5_h, t1_p]
+            df.loc[len(df.index)] = row2
+            number += 1
+
+            row3 = [number, "Y", t2_h, t2_p]
+            df.loc[len(df.index)] = row3
+            row4 = [number, "N", t6_h, t2_p]
+            df.loc[len(df.index)] = row4
+
+            number += 1
+
+        if no_npi:
+            row1 = [number, "Y", t1_h, t1_p]
+            df.loc[len(df.index)] = row1
+            row2 = [number, "N", t3_h, t1_p]
+            df.loc[len(df.index)] = row2
+            number += 1
+
+            row3 = [number, "Y", t2_h, t2_p]
+            df.loc[len(df.index)] = row3
+            row4 = [number, "N", t4_h, t2_p]
+            df.loc[len(df.index)] = row4
+
+            number += 1
+
+    df.to_csv(output_file, sep="\t", index=False)
     #GOTTA FINISH THIS SHIT
 
 
@@ -184,6 +261,101 @@ def create_templates_physical_ints(output_file, swap=False, no_npi=False):
                     "drops the shirt", "drops the napkin", "drops the fork", "heat the water", "heats the soup",
                     "heats the tea", "heats the car"]
 
+    bare_verb_phrases = ["sit on the chair", "sit on the table", "sit on the couch", "sit on the floor", "sit on the carpet",
+                    "sit on the bench", "sit on the seat", "catch the baseball", "catch the dog", "catch the ball",
+                    "catch the football", "catch the leaves", "throw the ball", "throw the paper airplane", "throw the paper",
+                    "throw the baseball", "throw the football", "throw the dart", "throw the cup", "throw the pencil",
+                    "kick the ball", "kick the wall", "kick the table", "kick the football", "push the cart",
+                    "push the couch", "push the table", "push the chair", "push the furniture", "push the car",
+                    "drop the plate", "drop the ball", "drop the toy", "drop the picture", "drop the paper",
+                    "drop the shirt", "drop the napkin", "drop the fork", "heat the water", "heat the soup",
+                    "heat the tea", "heat the car"]
+
+    template1 = "<X> <V> more than <Y> does."
+    template1_hyp = "<X> did not <BV>, let alone <Y>."
+    template2 = "<X> <V> less than <Y> does."
+    template2_hyp = "<Y> did not <BV>, let alone <X>."
+
+    template3_hyp = "<X> <V> <O>, let alone <Y>."
+    template4_hyp = "<Y> <V> <O>, let alone <X>."
+
+    template5_hyp = "<X> did not <BV> <O>, alone let <Y>."
+    template6_hyp = "<Y> did not <BV> <O>, alone let <X>."
+
+    name_perms = list(itertools.permutations(names, 2))
+
+    final_combinations = list(itertools.product(name_perms, ids))
+
+    # Flatten the tuple structure for better readability
+    final_combinations = [(a1, a2, b) for (a1, a2), (b) in final_combinations]
+
+    print(final_combinations)
+
+    df = pd.DataFrame(columns=["Num", "Correctness", "Premise", "Hypothesis"])
+
+    number = 1
+
+    number = 1
+
+    for n1, n2, id in final_combinations:
+        v = verb_phrases[id]
+        bv = bare_verb_phrases[id]
+
+        t1_p = sub_template(n1, n2, "", v, bv, template1)
+        t1_h = sub_template(n1, n2, "", v, bv, template1_hyp)
+        t2_p = sub_template(n1, n2, "", v, bv, template2)
+        t2_h = sub_template(n1, n2, "", v, bv, template2_hyp)
+
+        t3_h = sub_template(n1, n2, "", v, bv, template3_hyp)
+        t4_h = sub_template(n1, n2, "", v, bv, template4_hyp)
+
+        t5_h = sub_template(n1, n2, "", v, bv, template5_hyp)
+        t6_h = sub_template(n1, n2, "", v, bv, template6_hyp)
+
+        if not swap and not no_npi:
+            row1 = [number, "Y", t1_h, t1_p]
+            df.loc[len(df.index)] = row1
+            row2 = [number, "N", t1_h, t2_p]
+            df.loc[len(df.index)] = row2
+            number += 1
+
+            row3 = [number, "Y", t2_h, t2_p]
+            df.loc[len(df.index)] = row3
+            row4 = [number, "N", t2_h, t1_p]
+            df.loc[len(df.index)] = row4
+
+            number += 1
+
+        if swap:
+            row1 = [number, "Y", t1_h, t1_p]
+            df.loc[len(df.index)] = row1
+            row2 = [number, "N", t5_h, t1_p]
+            df.loc[len(df.index)] = row2
+            number += 1
+
+            row3 = [number, "Y", t2_h, t2_p]
+            df.loc[len(df.index)] = row3
+            row4 = [number, "N", t6_h, t2_p]
+            df.loc[len(df.index)] = row4
+
+            number += 1
+
+        if no_npi:
+            row1 = [number, "Y", t1_h, t1_p]
+            df.loc[len(df.index)] = row1
+            row2 = [number, "N", t3_h, t1_p]
+            df.loc[len(df.index)] = row2
+            number += 1
+
+            row3 = [number, "Y", t2_h, t2_p]
+            df.loc[len(df.index)] = row3
+            row4 = [number, "N", t4_h, t2_p]
+            df.loc[len(df.index)] = row4
+
+            number += 1
+
+    df.to_csv(output_file, sep="\t", index=False)
+
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--output_file")
@@ -191,4 +363,6 @@ if __name__ == "__main__":
     parser.add_argument("--no_npi", action="store_true")
 
     args = parser.parse_args()
-    create_template_social_ints(args.output_file, args.swap, args.no_npi)
+    # create_template_social_ints(args.output_file, args.swap, args.no_npi)
+    #create_templates_meterials(args.output_file, args.swap, args.no_npi)
+    create_templates_physical_ints(args.output_file, args.swap, args.no_npi)

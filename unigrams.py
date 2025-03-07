@@ -9,6 +9,7 @@ from joblib import Parallel, delayed
 from multiprocessing import Manager
 from tqdm import tqdm
 from transformers import AutoTokenizer
+import glob
 
 
 
@@ -18,8 +19,11 @@ def main(args):
     """
 
     # read corpus
-    with open(args.corpus) as inf:
-        corpus = inf.read()
+    corpus = ""
+    for fname in glob.glob(args.corpus+"*train"):
+        with open(fname) as inf:
+            data = inf.read()
+            corpus += data
 
     # tokenize corpus
     tokenizer = AutoTokenizer.from_pretrained(args.model)
