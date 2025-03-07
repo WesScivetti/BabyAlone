@@ -19,11 +19,14 @@ def main(args):
     """
 
     # read corpus
-    corpus = ""
-    for fname in glob.glob(args.corpus+"*train"):
-        with open(fname) as inf:
-            data = inf.read()
-            corpus += data
+    # corpus = ""
+    # for fname in glob.glob(args.corpus+"*train"):
+    #     with open(fname) as inf:
+    #         data = inf.read()
+    #         corpus += data
+
+    with open(args.corpus) as inf:
+        corpus = inf.read()
 
     # tokenize corpus
     tokenizer = AutoTokenizer.from_pretrained(args.model)
