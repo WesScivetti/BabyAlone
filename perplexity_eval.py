@@ -30,7 +30,9 @@ def avg_surprisal_minicons(model, tokenizer, context_list, stimuli_list):
 
 
 
-    seq_surprisal = model.conditional_score(context_list, stimuli_list, reduction = lambda x: -x.sum(0))
+    seq_log_prob = model.conditional_score(context_list, stimuli_list) #log prob
+
+    seq_surprisal = -seq_log_prob
     # print(seq_surprisal[0])
     return seq_surprisal
 
@@ -93,9 +95,9 @@ def evaluate_dataset(model, tokenizer, df, output_dir, form=False):
 
     #ONLY WANT LET-ALONE SECOND
     # lf_list = df['Let_First'].tolist()
-    print("starting first surprisals")
+    #print("starting first surprisals")
 
-    lf_surps = surprisal_long_list(model, tokenizer, prem_list, hyp_list) #Let-alone first: let-alone is the "context"
+    #lf_surps = surprisal_long_list(model, tokenizer, prem_list, hyp_list) #Let-alone first: let-alone is the "context"
 
 
     #ls_list = df["Let_Last"].tolist()
@@ -115,7 +117,7 @@ def evaluate_dataset(model, tokenizer, df, output_dir, form=False):
     # assert len(df.index) == len(lsr_list)
 
     for r in df.index:
-        df.loc[r, "Surp_First"] = lf_surps[r]
+       #df.loc[r, "Surp_First"] = lf_surps[r]
         df.loc[r, "Surp_Last"] = ls_surps[r]
 
         # df.loc[r, "Surp_First_Reversed"] = lfr_surps[r]
@@ -136,17 +138,17 @@ def evaluate_dataset(model, tokenizer, df, output_dir, form=False):
             bad_r = r + 1
             number = df.loc[r, "Num"]
 
-            good_text_first = df.loc[r, "Let_First"]
+            #good_text_first = df.loc[r, "Let_First"]
             good_text_last = df.loc[r, "Let_Last"]
 
-            good_surp_first = df.loc[r, "Surp_First"]
+            #good_surp_first = df.loc[r, "Surp_First"]
             good_surp_last = df.loc[r, "Surp_Last"]
 
             if not form:
-                bad_text_first = df.loc[bad_r, "Let_First"]
+                #bad_text_first = df.loc[bad_r, "Let_First"]
                 bad_text_last = df.loc[bad_r, "Let_Last"]
 
-                bad_surp_first = df.loc[bad_r, "Surp_First"]
+                #bad_surp_first = df.loc[bad_r, "Surp_First"]
                 bad_surp_last = df.loc[bad_r, "Surp_Last"]
 
             if form:
@@ -156,11 +158,11 @@ def evaluate_dataset(model, tokenizer, df, output_dir, form=False):
                 bad_surp_first = df.loc[r, "Surp_First_Reversed"]
                 bad_surp_last = df.loc[r, "Surp_Last_Reversed"]
 
-            if good_surp_first < bad_surp_first:
-                c_first = "Y"
-                correct_first += 1
-            else:
-                c_first = "N"
+            # if good_surp_first < bad_surp_first:
+            #     c_first = "Y"
+            #     correct_first += 1
+            # else:
+            #     c_first = "N"
 
             if good_surp_last < bad_surp_last:
                 c_last = "Y"
@@ -170,23 +172,23 @@ def evaluate_dataset(model, tokenizer, df, output_dir, form=False):
 
 
 
-            row_first = [number, good_text_first, bad_text_first, good_surp_first.cpu(), bad_surp_first.cpu(), c_first]
-            row_last = [number, good_text_last, bad_text_last, good_surp_last.cpu(), bad_surp_last.cpu(), c_last]
+            #row_first = [number, good_text_first, bad_text_first, good_surp_first, bad_surp_first, c_first]
+            row_last = [number, good_text_last, bad_text_last, good_surp_last, bad_surp_last, c_last]
 
-            outdf_first.loc[len(outdf_first.index)] = row_first
+           #outdf_first.loc[len(outdf_first.index)] = row_first
             outdf_last.loc[len(outdf_last.index)] = row_last
 
             total += 1
 
 
-    first_name = output_dir + "results_LA_First.tsv"
+    #first_name = output_dir + "results_LA_First.tsv"
 
     last_name = output_dir + "results_LA_Last.tsv"
 
-    outdf_first.to_csv(first_name, index=False, sep="\t")
+    #outdf_first.to_csv(first_name, index=False, sep="\t")
     outdf_last.to_csv(last_name, index=False, sep="\t")
 
-    print("CORRECT FIRST", correct_first / total)
+    #print("CORRECT FIRST", correct_first / total)
     print("CORRECT LAST", correct_last / total)
 
     return

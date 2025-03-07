@@ -17,7 +17,7 @@ def sub_template(n1, n2, obj, v, bv, template):
 
     return template
 
-def create_template_social_ints(output_file):
+def create_template_social_ints(output_file, swap=False, no_npi=False):
     """
     creates social interaction-based templates
     """
@@ -43,6 +43,12 @@ def create_template_social_ints(output_file):
     template1_hyp = "<X> did not <BV> <O>, let alone <Y>."
     template2 = "<X> <V> <O> less than <Y> does."
     template2_hyp = "<Y> did not <BV> <O>, let alone <X>."
+
+    template3_hyp = "<X> <V> <O>, let alone <Y>."
+    template4_hyp = "<Y> <V> <O>, let alone <X>."
+
+    template5_hyp = "<X> did not <BV> <O>, alone let <Y>."
+    template6_hyp = "<Y> did not <BV> <O>, alone let <X>."
 
     noun_perms = list(itertools.permutations(nouns, 2))
     name_perms = list(itertools.permutations(names, 2))
@@ -70,29 +76,119 @@ def create_template_social_ints(output_file):
         t2_p = sub_template(n1, n2, o, v, bv, template2)
         t2_h = sub_template(n1, n2, o, v, bv, template2_hyp)
 
-        row1 = [number, "Y", t1_h, t1_p]
-        df.loc[len(df.index)] = row1
-        row2 = [number, "N", t1_h, t2_p]
-        df.loc[len(df.index)] = row2
-        number += 1
+        t3_h = sub_template(n1, n2, o, v, bv, template3_hyp)
+        t4_h = sub_template(n1, n2, o, v, bv, template4_hyp)
 
-        row3 = [number, "Y", t2_h, t2_p]
-        df.loc[len(df.index)] = row3
-        row4 = [number, "N", t2_h, t1_p]
-        df.loc[len(df.index)] = row4
+        t5_h = sub_template(n1, n2, o, v, bv, template5_hyp)
+        t6_h = sub_template(n1, n2, o, v, bv, template6_hyp)
 
-        number += 1
+        if not swap and not no_npi:
+            row1 = [number, "Y", t1_h, t1_p]
+            df.loc[len(df.index)] = row1
+            row2 = [number, "N", t1_h, t2_p]
+            df.loc[len(df.index)] = row2
+            number += 1
+
+            row3 = [number, "Y", t2_h, t2_p]
+            df.loc[len(df.index)] = row3
+            row4 = [number, "N", t2_h, t1_p]
+            df.loc[len(df.index)] = row4
+
+            number += 1
+
+        if swap:
+            row1 = [number, "Y", t1_h, t1_p]
+            df.loc[len(df.index)] = row1
+            row2 = [number, "N", t5_h, t1_p]
+            df.loc[len(df.index)] = row2
+            number += 1
+
+            row3 = [number, "Y", t2_h, t2_p]
+            df.loc[len(df.index)] = row3
+            row4 = [number, "N", t6_h, t2_p]
+            df.loc[len(df.index)] = row4
+
+            number += 1
+
+        if no_npi:
+            row1 = [number, "Y", t1_h, t1_p]
+            df.loc[len(df.index)] = row1
+            row2 = [number, "N", t3_h, t1_p]
+            df.loc[len(df.index)] = row2
+            number += 1
+
+            row3 = [number, "Y", t2_h, t2_p]
+            df.loc[len(df.index)] = row3
+            row4 = [number, "N", t4_h, t2_p]
+            df.loc[len(df.index)] = row4
+
+            number += 1
 
 
     df.to_csv(output_file, sep="\t", index=False)
 
 
+def create_templates_meterials(output_file, swap=False, no_npi=False):
+
+    ids = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+           28, 29, 30]
+
+    names = ["Wes", "Fred", "Lucille", "Louise", "Judit", "Alia", "Jared", "Jordan", "Milo",
+             "Valery", "Michelle"]
+
+    verb_phrases = ["breaks the window", "breaks the glass", "breaks the toy", "rips the paper", "rips the shirt",
+                    "rips the napkin", "rips the towel", "rips the newspaper", "pours the water", "pours the coffeee",
+                    "pours the tea", "pours the juice", "pours the medicine", "hangs the painting", "hangs the photograph",
+                    "folds the towel", "folds the napkin", "folds the paper", "folds the clothes", "rips the bandaid", 
+                    "pours the concrete", "breaks the vase", "breaks the plate", "breaks the chair", "breaks the table",
+                    "stirs the soup", "stirs the drink", "stirs the stew", "wrinkles the shirt", "wrinkles the paper",
+                    "splashes the water"]
+    
+    
+    bare_verb_phrases = ["break the window", "break the glass", "break the toy", "rip the paper", "rip the shirt",
+                    "rip the napkin", "rip the towel", "rip the newspaper", "pour the water", "pour the coffeee",
+                    "pour the tea", "pour the juice", "pour the medicine", "hang the painting", "hang the photograph",
+                    "fold the towel", "fold the napkin", "fold the paper", "fold the clothes", "rip the bandaid", 
+                    "pour the concrete", "break the vase", "break the plate", "break the chair", "break the table",
+                    "stir the soup", "stir the drink", "stir the stew", "wrinkle the shirt", "wrinkle the paper",
+                    "splash the water"]
+
+    
+
+    template1 = "<X> <V> more than <Y> does."
+    template1_hyp = "<X> did not <BV>, let alone <Y>."
+    template2 = "<X> <V> less than <Y> does."
+    template2_hyp = "<Y> did not <BV>, let alone <X>."
+
+    name_perms = list(itertools.permutations(names, 2))
 
 
+    #GOTTA FINISH THIS SHIT
+
+
+def create_templates_physical_ints(output_file, swap=False, no_npi=False):
+    
+    names = ["Wes", "Fred", "Lucille", "Louise", "Judit", "Alia", "Jared", "Jordan", "Milo",
+             "Valery", "Michelle"]
+
+    ids = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+           28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]
+
+    verb_phrases = ["sits on the chair", "sits on the table", "sits on the couch", "sits on the floor", "sits on the carpet",
+                    "sits on the bench", "sits on the seat", "catches the baseball", "catches the dog", "catches the ball",
+                    "catches the football", "catches the leaves", "throws the ball", "throws the paper airplane", "throws the paper",
+                    "throws the baseball", "throws the football", "throws the dart", "throws the cup", "throws the pencil",
+                    "kicks the ball", "kicks the wall", "kicks the table", "kicks the football", "pushes the cart",
+                    "pushes the couch", "pushes the table", "pushes the chair", "pushes the furniture", "pushes the car",
+                    "drops the plate", "drops the ball", "drops the toy", "drops the picture", "drops the paper",
+                    "drops the shirt", "drops the napkin", "drops the fork", "heat the water", "heats the soup",
+                    "heats the tea", "heats the car"]
 
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--output_file")
+    parser.add_argument("--swap", action="store_true")
+    parser.add_argument("--no_npi", action="store_true")
 
     args = parser.parse_args()
-    create_template_social_ints(args.output_file)
+    create_template_social_ints(args.output_file, args.swap, args.no_npi)
