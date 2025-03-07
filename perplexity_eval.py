@@ -32,7 +32,7 @@ def avg_surprisal_minicons(model, tokenizer, context_list, stimuli_list):
 
     seq_log_prob = model.conditional_score(context_list, stimuli_list) #log prob
 
-    seq_surprisal = -seq_log_prob
+    seq_surprisal = [-s for s in seq_log_prob]
     # print(seq_surprisal[0])
     return seq_surprisal
 
@@ -191,7 +191,7 @@ def evaluate_dataset(model, tokenizer, df, output_dir, form=False):
     #print("CORRECT FIRST", correct_first / total)
     print("CORRECT LAST", correct_last / total)
 
-    return
+    return correct_last / total
 
 def loop_checkpoints(model_dir, test_file, output_dir, form=False):
     """
@@ -214,6 +214,12 @@ def loop_checkpoints(model_dir, test_file, output_dir, form=False):
     # tokenized_test_text = tokenizer(test_text1, return_tensors="pt")
     # tokenized_test_text2 = tokenizer(test_text2, return_tensors="pt")
 
+    summary_dir = output_dir + "summary.txt"
+    with open(summary_dir, "w") as out2:
+        print("THIS IS THE SUMMARY of the output", file=out2)
+
+    summaries = []
+
     for ch in checkpoint_list:
         #print(ch)
         ch_model = OPTForCausalLM.from_pretrained(ch)
@@ -221,9 +227,12 @@ def loop_checkpoints(model_dir, test_file, output_dir, form=False):
         final_output_dir = output_dir + ch.split("/")[4]
 
         print("Starting checkpoint evaluation:", ch.split("/")[4])
-        
-        evaluate_dataset(ch_model, tokenizer, df, final_output_dir, form=form)
 
+        acc = evaluate_dataset(ch_model, tokenizer, df, final_output_dir, form=form)
+
+
+        with open(summary_dir, "a") as out2:
+            out2.write(ch + "\t" + str(acc) + "\n")
 
         print("Checkpoint evaluation finished")
 

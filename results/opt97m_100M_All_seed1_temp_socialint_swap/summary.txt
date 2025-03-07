@@ -1,0 +1,2 @@
+THIS IS THE SUMMARY of the output
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-18948/	0.9853030303030303
