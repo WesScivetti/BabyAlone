@@ -8,6 +8,7 @@ from tokenizers import ByteLevelBPETokenizer
 import torch
 from transformers import PreTrainedTokenizerFast, AutoTokenizer, OPTConfig, OPTForCausalLM, TrainingArguments, Trainer, set_seed, AutoModelForCausalLM
 from minicons import scorer
+from unigramlm import UnigramLM
 import re
 
 
@@ -49,7 +50,15 @@ def surprisal_long_list(model, tokenizer, context_list, stimuli_list):
         chunk_surps.append(sups)
     return list(chain.from_iterable(chunk_surps))
 
-def evaluate_dataset(model, tokenizer, df, output_dir, form=False):
+def surprisal_list_unigrams(unigram_lm, stimuli_list):
+    """unigram log probability of the sentence"""
+    lps = []
+    for sent in stimuli_list:
+        lp = unigram_lm.sentence_log_prob(sent)
+        lps.append(lp)
+    return lps
+
+def evaluate_dataset(model, tokenizer, df, output_dir, form=False, unigramlm=None, slor=False):
     """
     evaluate the entire dataset, and then writes to output files
     """
@@ -103,6 +112,16 @@ def evaluate_dataset(model, tokenizer, df, output_dir, form=False):
     #ls_list = df["Let_Last"].tolist()
     print("starting second surprisals")
     ls_surps = surprisal_long_list(model, tokenizer, hyp_list, prem_list) #
+    if slor:
+        ls_surps = [-s for s in ls_surps] #change to logprobs
+        print(ls_surps)
+        ls_u = surprisal_list_unigrams(unigramlm, prem_list)
+        print(ls_u)
+        slors = [lm - u for (lm, u) in zip(ls_surps, ls_u)]
+        print(slors)
+        # old_ls_surps = ls_surps
+        # ls_surps = slors
+
 
     #
     # lfr_list = df["Let_First_Reversed"].tolist()
@@ -151,24 +170,30 @@ def evaluate_dataset(model, tokenizer, df, output_dir, form=False):
                 #bad_surp_first = df.loc[bad_r, "Surp_First"]
                 bad_surp_last = df.loc[bad_r, "Surp_Last"]
 
-            if form:
-                bad_text_first = df.loc[r, "Let_First_Reversed"]
-                bad_text_last = df.loc[r, "Let_Last_Reversed"]
-
-                bad_surp_first = df.loc[r, "Surp_First_Reversed"]
-                bad_surp_last = df.loc[r, "Surp_Last_Reversed"]
+            # if form:
+            #     bad_text_first = df.loc[r, "Let_First_Reversed"]
+            #     bad_text_last = df.loc[r, "Let_Last_Reversed"]
+            #
+            #     bad_surp_first = df.loc[r, "Surp_First_Reversed"]
+            #     bad_surp_last = df.loc[r, "Surp_Last_Reversed"]
 
             # if good_surp_first < bad_surp_first:
             #     c_first = "Y"
             #     correct_first += 1
             # else:
             #     c_first = "N"
-
-            if good_surp_last < bad_surp_last:
-                c_last = "Y"
-                correct_last += 1
+            if not slor:
+                if good_surp_last < bad_surp_last:
+                    c_last = "Y"
+                    correct_last += 1
+                else:
+                    c_last = "N"
             else:
-                c_last = "N"
+                if good_surp_last > bad_surp_last:
+                    c_last = "Y"
+                    correct_last += 1
+                else:
+                    c_last = "N"
 
 
 
@@ -193,10 +218,12 @@ def evaluate_dataset(model, tokenizer, df, output_dir, form=False):
 
     return correct_last / total
 
-def loop_checkpoints(model_dir, test_file, output_dir, form=False):
+def loop_checkpoints(model_dir, test_file, output_dir, form=False, slor=False):
     """
     actually loops through the checkpoints of a model and does eval
     """
+    counts_dir = model_dir +"counts.csv"
+
     chkpt_dir = model_dir + "chkpts/"
     tokenizer_dir = model_dir + "tokenizer/"
     checkpoint_list = glob.glob(chkpt_dir + "*/")
@@ -206,6 +233,14 @@ def loop_checkpoints(model_dir, test_file, output_dir, form=False):
 
     tokenizer = AutoTokenizer.from_pretrained(tokenizer_dir)
     print("tokenizer loaded")
+
+    if slor:
+        print("loading unigram model")
+        unigramlm = UnigramLM(counts_dir, tokenizer)
+        unigramlm.load_counts()
+        print("unigram model loaded")
+    else:
+        unigramlm = None
 
     df = load_perp_dataset(test_file)
     # test_text1 = "The block is big. This is big."
@@ -228,7 +263,7 @@ def loop_checkpoints(model_dir, test_file, output_dir, form=False):
 
         print("Starting checkpoint evaluation:", ch.split("/")[4])
 
-        acc = evaluate_dataset(ch_model, tokenizer, df, final_output_dir, form=form)
+        acc = evaluate_dataset(ch_model, tokenizer, df, final_output_dir, form=form, unigramlm=unigramlm, slor=slor)
 
 
         with open(summary_dir, "a") as out2:
@@ -251,12 +286,13 @@ if __name__ == "__main__":
     parser.add_argument("--test_file")
     parser.add_argument("--form", action="store_true")
     parser.add_argument("--other_model", default=None)
+    parser.add_argument("--slor", action="store_true")
 
 
     args = parser.parse_args()
     #load_perp_dataset(args.test_file)
     if not args.other_model:
-        loop_checkpoints(args.model_dir, args.test_file, args.output_dir, form=args.form)
+        loop_checkpoints(args.model_dir, args.test_file, args.output_dir, form=args.form, slor=args.slor)
 
     else:
         eval_other_model(args.other_model, args.test_file, args.output_dir)

@@ -11,7 +11,7 @@ class UnigramLM:
 
     def __init__(self, counts_path, tokenizer):
         self.counts_path = counts_path
-        self.model_name = counts_path.split("/")[-1].split(".")[0]
+        # self.model_name = counts_path.split("/")[-1].split(".")[0]
         self.tokenizer = tokenizer
 
     def load_counts(self):
