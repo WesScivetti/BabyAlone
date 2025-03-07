@@ -26,7 +26,7 @@ def main(args):
     #         corpus += data
 
     with open(args.corpus) as inf:
-        corpus = inf.read()
+        corpus = inf.readlines()
 
     # tokenize corpus
     tokenizer = AutoTokenizer.from_pretrained(args.model)
