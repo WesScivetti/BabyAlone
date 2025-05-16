@@ -1,0 +1,5 @@
+Num	Good Pair	Bad Pair	Good_Surp	Bad_Surp	Correct
+1	I didn't tell the secret to my mom, let alone my sister. I tell my mom more things than I tell my sister.	I didn't tell the secret to my sister, let alone my mom. I tell my mom more things than I tell my sister.	tensor(83.2503)	tensor(84.6828)	Y
+2	I didn't tell the story to my mom, let alone my sister. I tell my mom more things than I tell my sister.	I didn't tell the story to my sister, let alone my mom. I tell my mom more things than I tell my sister.	tensor(80.1706)	tensor(82.7419)	Y
+3	I didn't tell the joke to my mom, let alone my sister. I tell my mom more things than I tell my sister.	I didn't tell the joke to my sister, let alone my mom. I tell my mom more things than I tell my sister.	tensor(86.4464)	tensor(88.2568)	Y
+4	I didn't tell the rumor to my mom, let alone my sister. I tell my mom more things than I tell my sister.	I didn't tell the rumor to my sister, let alone my mom. I tell my mom more things than I tell my sister.	tensor(91.2514)	tensor(93.4386)	Y

@@ -1,0 +1,21 @@
+THIS IS THE SUMMARY of the output
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-18943/	0.9997067448680352
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-37886/	0.9994134897360704
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-56829/	0.9991202346041056
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-75772/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-94715/	0.9997067448680352
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-113658/	0.9967741935483871
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-132601/	0.9944281524926686
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-151544/	0.9888563049853373
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-170487/	0.9859237536656892
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-189430/	0.9906158357771261
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-208373/	0.9709677419354839
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-227316/	0.9873900293255132
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-246259/	0.9917888563049854
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-265202/	0.9580645161290322
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-284145/	0.97683284457478
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-303088/	0.9894428152492669
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-322031/	0.9721407624633431
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-340974/	0.9782991202346041
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-359917/	0.9712609970674487
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-378860/	0.9700879765395894

@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+import openai
 from collections import defaultdict
 import glob
 from itertools import chain
@@ -11,6 +12,7 @@ from minicons import scorer
 from unigramlm import UnigramLM
 import re
 
+OPENAI_KEY = "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"
 
 def load_perp_dataset(input_file):
     """
@@ -20,24 +22,29 @@ def load_perp_dataset(input_file):
     return df
 
 
-def avg_surprisal_minicons(model, tokenizer, context_list, stimuli_list):
+def avg_surprisal_minicons(model, tokenizer, context_list, stimuli_list, npi=False):
     """
     calculates the surprisal using minicons
     """
+
+
     model = scorer.IncrementalLMScorer(model, tokenizer=tokenizer, device='cuda')
 
     # surprisals = model.token_score(text_list, surprisal=True, base_two=True)
     # print(surprisals)
 
 
+    if not npi:
+        seq_log_prob = model.conditional_score(context_list, stimuli_list) #log prob
+        seq_surprisal = [-s for s in seq_log_prob]
 
-    seq_log_prob = model.conditional_score(context_list, stimuli_list) #log prob
-
-    seq_surprisal = [-s for s in seq_log_prob]
+    else:
+        seq_surprisal = model.sequence_score(stimuli_list, reduction=lambda x: -x.mean(0))
+        seq_surprisal = [s.cpu() for s in seq_surprisal]
     # print(seq_surprisal[0])
     return seq_surprisal
 
-def surprisal_long_list(model, tokenizer, context_list, stimuli_list):
+def surprisal_long_list(model, tokenizer, context_list, stimuli_list, npi=False):
     """chunks and returns surprisal of really long list
     can't feed the whole list into minicon in one batch
     COMPUTES CONDITIONAL LOG-PROB of stimuli based on context, but doesn't include context in average."""
@@ -46,7 +53,7 @@ def surprisal_long_list(model, tokenizer, context_list, stimuli_list):
     chunks_stimuli = [stimuli_list[i:i + 32] for i in range(0, len(stimuli_list), 32)]
     chunk_surps = []
     for chunk_context, chunk_stimuli in zip(chunks_context, chunks_stimuli):
-        sups = avg_surprisal_minicons(model, tokenizer, chunk_context, chunk_stimuli)
+        sups = avg_surprisal_minicons(model, tokenizer, chunk_context, chunk_stimuli, npi=npi)
         chunk_surps.append(sups)
     return list(chain.from_iterable(chunk_surps))
 
@@ -56,12 +63,18 @@ def surprisal_list_unigrams(unigram_lm, stimuli_list):
     for sent in stimuli_list:
         lp = unigram_lm.sentence_log_prob(sent)
         lps.append(lp)
+    #print(sent, lp)
     return lps
 
 def evaluate_dataset(model, tokenizer, df, output_dir, form=False, unigramlm=None, slor=False):
     """
     evaluate the entire dataset, and then writes to output files
     """
+    if slor:
+        npi=True
+    else:
+        npi=False
+        
     for r in df.index:
         prem = df.loc[r,"Premise"]          #Let-alone sentence is always the "Premise"
         hyp = df.loc[r, "Hypothesis"]       #Context is always the "Hypthoesis" - a little confusing I know
@@ -111,16 +124,16 @@ def evaluate_dataset(model, tokenizer, df, output_dir, form=False, unigramlm=Non
 
     #ls_list = df["Let_Last"].tolist()
     print("starting second surprisals")
-    ls_surps = surprisal_long_list(model, tokenizer, hyp_list, prem_list) #
+    ls_surps = surprisal_long_list(model, tokenizer, hyp_list, prem_list,npi=npi) #
     if slor:
         ls_surps = [-s for s in ls_surps] #change to logprobs
-        print(ls_surps)
+        #print(ls_surps)
         ls_u = surprisal_list_unigrams(unigramlm, prem_list)
-        print(ls_u)
+        #print(ls_u)
         slors = [lm - u for (lm, u) in zip(ls_surps, ls_u)]
-        print(slors)
+        #print(slors)
         # old_ls_surps = ls_surps
-        # ls_surps = slors
+        ls_surps = slors
 
 
     #

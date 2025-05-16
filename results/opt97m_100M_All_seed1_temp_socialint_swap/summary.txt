@@ -1,2 +1,21 @@
 THIS IS THE SUMMARY of the output
 models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-18948/	0.9853030303030303
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-37896/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-56844/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-75792/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-94740/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-113688/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-132636/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-151584/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-170532/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-189480/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-208428/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-227376/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-246324/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-265272/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-284220/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-303168/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-322116/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-341064/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-360012/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-378960/	1.0

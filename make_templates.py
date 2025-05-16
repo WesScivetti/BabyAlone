@@ -155,10 +155,10 @@ def create_templates_meterials(output_file, swap=False, no_npi=False):
 
     
 
-    template1 = "<X> <V> more than <Y> does."
-    template1_hyp = "<X> did not <BV>, let alone <Y>."
-    template2 = "<X> <V> less than <Y> does."
-    template2_hyp = "<Y> did not <BV>, let alone <X>."
+    template1 = "Usually, <X> <V> more than <Y> does."
+    template1_hyp = "This time, <X> did not <BV>, let alone <Y>."
+    template2 = "Usually, <X> <V> less than <Y> does."
+    template2_hyp = "This time, <Y> did not <BV>, let alone <X>."
 
 
     template3_hyp = "<X> <V> <O>, let alone <Y>."
@@ -271,10 +271,10 @@ def create_templates_physical_ints(output_file, swap=False, no_npi=False):
                     "drop the shirt", "drop the napkin", "drop the fork", "heat the water", "heat the soup",
                     "heat the tea", "heat the car"]
 
-    template1 = "<X> <V> more than <Y> does."
-    template1_hyp = "<X> did not <BV>, let alone <Y>."
-    template2 = "<X> <V> less than <Y> does."
-    template2_hyp = "<Y> did not <BV>, let alone <X>."
+    template1 = "Usually, <X> <V> more than <Y> does."
+    template1_hyp = "This time, <X> did not <BV>, let alone <Y>."
+    template2 = "Usually, <X> <V> less than <Y> does."
+    template2_hyp = "This time, <Y> did not <BV>, let alone <X>."
 
     template3_hyp = "<X> <V> <O>, let alone <Y>."
     template4_hyp = "<Y> <V> <O>, let alone <X>."

@@ -3,10 +3,170 @@ import glob
 from argparse import ArgumentParser
 import random
 
+
+def count_npi_la(input_dir, output_dir, related=False, all=False):
+    """
+    Basically, this one checks if there is NPI licensor in a sentence with let or alone. The test is if negation
+    is a spurious correlation with let alone. Just checks negation and common adverbial licensors
+    """
+    npi_licensors = [
+        "not", "n't", "no", "never", "none", "nobody", "nothing", "rarely", "seldom", "hardly", "scarcely", "barely",
+    ]
+
+
+    lic_alt   = "|".join(map(re.escape, npi_licensors))
+
+
+    file_list = glob.glob(input_dir + "/*train")
+
+    negation_total = 0
+
+    negation_let = 0
+
+    negation_alone = 0
+
+    negation_la = 0
+
+    total_la = 0
+
+    total_let = 0
+
+    total_alone = 0
+
+    total = 0
+
+    for fname in file_list:
+        outfname = output_dir + fname.split("/")[3].split(".")[0] + "_noLA.train"
+
+        with open(outfname, "w") as outf:
+            with open(fname) as inf:
+                for line in inf:
+                    if not related and not all:
+                        total += 1
+                        pattern = rf"\b({lic_alt})\b.*?\blet\b \balone\b"
+                        if re.search(pattern, line, flags=re.I):
+                            #print("NPI found before let alone")
+                            negation_la += 1
+
+                        if re.search(rf"\blet \balone\b", line, flags=re.I):
+                            total_la += 1
+
+                        pattern = rf"\b({lic_alt})\b.*?\blet\b"
+                        if re.search(pattern, line, flags=re.I):
+                            #print("NPI found before let alone")
+                            negation_let += 1
+
+                        if re.search(rf"\blet\b", line, flags=re.I):
+                            total_let += 1
+
+                        pattern = rf"\b({lic_alt})\b.*?\balone\b"
+                        if re.search(pattern, line, flags=re.I):
+                            #print("NPI found before let alone")
+                            negation_alone += 1
+
+                        if re.search(rf"\balone\b", line, flags=re.I):
+                            total_alone += 1
+
+                        pattern = rf"\b({lic_alt})\b"
+                        if re.search(pattern, line, flags=re.I):
+                            #print("NPI found before let alone")
+                            negation_total += 1
+
+    print("TOTAL", total)
+    print("TOTAL NEG", negation_total)
+    print("PROPORTION", negation_total/total)
+    print("TOTAL LA", total_la)
+    print("TOTAL NEG LA ", negation_la)
+    print("PROPORTION LA ", negation_la / total_la)
+    print("TOTAL LET", total_let)
+    print("TOTAL NEG LET", negation_let)
+    print("PROPORTION LET", negation_let/total_let)
+    print("TOTAL ALONE", total_alone)
+    print("TOTAL NEG ALONE", negation_alone)
+    print("PROPORTION ALONE", negation_alone/total_alone)
+
+def filter_let(input_dir, output_dir):
+    """
+     filters out sentences with 'let' and counts them
+     """
+
+    file_list = glob.glob(input_dir + "/*train")
+
+    filtered_counter = 0
+
+    for fname in file_list:
+        outfname = output_dir + fname.split("/")[3].split(".")[0] + "_nolet.train"
+
+        with open(outfname, "w") as outf:
+            with open(fname) as inf:
+                for line in inf:
+                    if "let" in line:
+                        print(line)
+                        filtered_counter += 1
+
+                    else:
+                        outf.write(line)
+
+    print(f"Filtered out {filtered_counter} sentences")
+
+def filter_alone(input_dir, output_dir):
+    """
+     filters out sentences with 'let' and counts them
+     """
+
+    file_list = glob.glob(input_dir + "/*train")
+
+    filtered_counter = 0
+
+    for fname in file_list:
+        outfname = output_dir + fname.split("/")[3].split(".")[0] + "_noalone.train"
+
+        with open(outfname, "w") as outf:
+            with open(fname) as inf:
+                for line in inf:
+                    if "alone" in line:
+                        print(line)
+                        filtered_counter += 1
+
+                    else:
+                        outf.write(line)
+
+    print(f"Filtered out {filtered_counter} sentences")
+
+def filter_let_or_alone(input_dir, output_dir):
+    """
+     filters out sentences with 'let' and counts them
+     """
+
+    file_list = glob.glob(input_dir + "/*train")
+
+    filtered_counter = 0
+
+    for fname in file_list:
+        outfname = output_dir + fname.split("/")[3].split(".")[0] + "_nolet_or_alone.train"
+
+        with open(outfname, "w") as outf:
+            with open(fname) as inf:
+                for line in inf:
+                    if "let" in line:
+                        print(line)
+                        filtered_counter += 1
+
+                    elif "alone" in line:
+                        print(line)
+                        filtered_counter += 1
+
+                    else:
+                        outf.write(line)
+
+    print(f"Filtered out {filtered_counter} sentences")
+
+
 def filter_letalone(input_dir, output_dir, related=False, all=False):
     """
     filters out let-alone sentences and counts them
     """
+    
     file_list = glob.glob(input_dir + "/*train")
 
     filtered_counter = 0
@@ -128,7 +288,10 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     if args.random == False:
-        filter_letalone(args.input_dir, args.output_dir, related=args.related, all=args.all)
+        count_npi_la(args.input_dir, args.output_dir, related=args.related, all=args.all)
+        #filter_letalone(args.input_dir, args.output_dir, related=args.related, all=args.all)
+        # filter_let_or_alone(args.input_dir, args.output_dir)
+
 
     if args.random == True:
         filter_random(args.input_dir, args.output_dir, args.count)

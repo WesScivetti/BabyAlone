@@ -1,0 +1,21 @@
+THIS IS THE SUMMARY of the output
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-18943/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-37886/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-56829/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-75772/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-94715/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-113658/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-132601/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-151544/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-170487/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-189430/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-208373/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-227316/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-246259/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-265202/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-284145/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-303088/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-322031/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-340974/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-359917/	1.0
+models/opt97m_100M_NoLA_Rel_seed2/opt97m-pretrained_100M_NoLA_Rel_seed2/chkpts/checkpoint-378860/	1.0

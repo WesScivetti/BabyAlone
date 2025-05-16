@@ -1,0 +1,21 @@
+THIS IS THE SUMMARY of the output
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-18948/	1.0
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-37896/	0.9997835497835498
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-56844/	0.9833333333333333
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-75792/	0.9984848484848485
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-94740/	0.9989177489177489
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-113688/	0.9989177489177489
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-132636/	0.9967532467532467
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-151584/	0.9954545454545455
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-170532/	0.9987012987012988
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-189480/	0.9967532467532467
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-208428/	0.9937229437229437
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-227376/	0.9891774891774892
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-246324/	0.9900432900432901
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-265272/	0.9974025974025974
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-284220/	0.9971861471861472
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-303168/	0.9883116883116884
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-322116/	0.9980519480519481
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-341064/	0.9939393939393939
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-360012/	0.9917748917748918
+models/opt97m_100M_All_seed1/opt97m-pretrained_100M_All_seed1/chkpts/checkpoint-378960/	0.9930735930735931
