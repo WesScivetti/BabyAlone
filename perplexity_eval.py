@@ -627,7 +627,7 @@ def loop_checkpoints(model_dir, test_file, output_dir, form=False, slor=False):
     checkpoint_list = glob.glob(chkpt_dir + "*/")
     checkpoint_list = [ch for ch in checkpoint_list if "logs/" not in ch]
     # print(checkpoint_list)
-    checkpoint_list.sort(key=lambda x: int(x.rstrip("/").split("/")[4].split("-")[1])) #sort checkpoints in order that they occured.
+    checkpoint_list.sort(key=lambda x: int(x.rstrip("/").split("/")[3].split("-")[1])) #sort checkpoints in order that they occured.
 
     tokenizer = AutoTokenizer.from_pretrained(tokenizer_dir)
     print("tokenizer loaded")
