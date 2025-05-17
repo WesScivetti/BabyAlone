@@ -52,16 +52,16 @@ def create_template_dict():
         "template_and_swap_no_npi" : "<PRO> <P2N> the <C2> <X2>, and the <C1> <X1>.",
         # I could afford the red watch, and the blue watch.
 
-        "template_base_psuedo" : "The <C1> <X1>, let alone the <C2> <X2>, <PRO> <P2>.",
+        "template_base_psuedo" : "It is the <C1> <X1>, let alone the <C2> <X2>, that <PRO> <P2>.",
         # The blue watch, let alone the red watch, I couldn't afford. -> should be not ideal
 
-        "template_swap_psuedo" : "The <C2> <X2>, let alone the <C1> <X1>, <PRO> <P2>.",
+        "template_swap_psuedo" : "It is the <C2> <X2>, let alone the <C1> <X1>, that <PRO> <P2>.",
         # The red watch, let alone the blue watch, I couldn't afford. -> should be not ideal
 
-        "template_and_base_psuedo" : "The <C1> <X1>, and the <C2> <X2>, <PRO> <P2>.",
+        "template_and_base_psuedo" : "It is the <C1> <X1>, and the <C2> <X2>, that <PRO> <P2>.",
         # The blue watch, and the red watch, I couldn't afford. -> should be better
 
-        "template_and_swap_psuedo" : "The <C2> <X2>, and the <C1> <X1>, <PRO> <P2>.",
+        "template_and_swap_psuedo" : "It is the <C2> <X2>, and the <C1> <X1>, that <PRO> <P2>.",
         # The red watch, and the blue watch, I couldn't afford. -> should be better
 
         "template_base_cp" : "<PRO> <P2> the <C1> <X1>, let alone <PRO> <P2>  the <C2> <X2>.",

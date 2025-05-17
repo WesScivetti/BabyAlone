@@ -19,7 +19,7 @@ def main(args):
     """
 
     # read corpus
-    # corpus = ""
+    corpus = ""
     # for fname in glob.glob(args.corpus+"*train"):
     #     with open(fname) as inf:
     #         data = inf.read()
