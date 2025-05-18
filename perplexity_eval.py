@@ -269,8 +269,8 @@ def evaluate_psuedo(model, tokenizer, ps_df, output_dir, unigramlm=None, slor=Fa
 
     print(i, len(slors))
     #print(correct_count, total_count, correct_count / total_count)
-    print(f"AND OVER LET ALONE: {correct_count}/{total_count} correct ({correct_count / total_count})")
-    print(f"DIFF OVER LET ALONE: {correct_count_diff}/{total_count} correct ({correct_count_diff / total_count})")
+    print(f"AND OVER LET ALONE (CLEFT): {correct_count}/{total_count} correct ({correct_count / total_count})")
+    print(f"DIFF OVER LET ALONE (CLEFT): {correct_count_diff}/{total_count} correct ({correct_count_diff / total_count})")
 
 def evaluate_cp(model, tokenizer, cp_df, output_dir, unigramlm=None, slor=False):
     """
@@ -365,8 +365,192 @@ def evaluate_cp(model, tokenizer, cp_df, output_dir, unigramlm=None, slor=False)
     print(i, len(slors))
     #print(correct_count, total_count, correct_count / total_count)
     cp_df.to_csv("results_cp.csv", index=False)
-    print(f"AND OVER LET ALONE: {correct_count}/{total_count} correct ({correct_count / total_count})")
-    print(f"DIFF OVER LET ALONE: {correct_count_diff}/{total_count} correct ({correct_count_diff / total_count})")
+    print(f"AND OVER LET ALONE (CP): {correct_count}/{total_count} correct ({correct_count / total_count})")
+    print(f"DIFF OVER LET ALONE (CP): {correct_count_diff}/{total_count} correct ({correct_count_diff / total_count})")
+
+def evaluate_gap(model, tokenizer, gap_df, output_dir, unigramlm=None, slor=False):
+    """
+    evaluate the gap dataset
+    """
+    let_alone_list = []
+    for r in gap_df.index:
+        base_subbed = gap_df.loc[r, "base_subbed"]
+        base_gap_subbed = gap_df.loc[r, "base_gap_subbed"]
+
+        swap_subbed = gap_df.loc[r, "swap_subbed"]
+        swap_gap_subbed = gap_df.loc[r, "swap_gap_subbed"]
+
+        base_and_subbed = gap_df.loc[r, "base_and_subbed"]
+        base_and_gap_subbed = gap_df.loc[r, "base_and_gap_subbed"]
+
+        swap_and_subbed = gap_df.loc[r, "swap_and_subbed"]
+        swap_and_gap_subbed = gap_df.loc[r, "swap_and_gap_subbed"]
+
+        let_alone_list.append(base_subbed)
+        let_alone_list.append(base_gap_subbed)
+        let_alone_list.append(swap_subbed)
+        let_alone_list.append(swap_gap_subbed)
+        let_alone_list.append(base_and_subbed)
+        let_alone_list.append(base_and_gap_subbed)
+        let_alone_list.append(swap_and_subbed)
+        let_alone_list.append(swap_and_gap_subbed)
+
+    let_alone_list_surps = surprisal_long_list(model, tokenizer, let_alone_list)
+    if slor:
+        let_alone_list_surps = [-s for s in let_alone_list_surps]
+        # print(ls_surps)
+        ls_u  = logprob_list_unigrams(unigramlm, let_alone_list)
+        # print(ls_u)
+        slors = [lm - u for (lm, u) in zip(let_alone_list_surps, ls_u)]
+    i = 0
+    correct_count = 0
+    total_count = 0
+    correct_count_diff = 0
+    for r in gap_df.index:
+        gap_df.loc[r, "SLOR_Base"] = slors[i]
+        slor_base = gap_df.loc[r, "SLOR_Base"]
+        i += 1
+
+        gap_df.loc[r, "SLOR_Base_Gap"] = slors[i]
+        slor_base_gap = gap_df.loc[r, "SLOR_Base_Gap"]
+        i += 1
+
+        gap_df.loc[r, "SLOR_Swap"] = slors[i]
+        slor_swap = gap_df.loc[r, "SLOR_Swap"]
+        i += 1
+
+        gap_df.loc[r, "SLOR_Swap_Gap"] = slors[i]
+        slor_swap_gap = gap_df.loc[r, "SLOR_Swap_Gap"]
+        i += 1
+
+        gap_df.loc[r, "SLOR_Base_And"] = slors[i]
+        slor_base_and = gap_df.loc[r, "SLOR_Base_And"]
+        i += 1
+
+        gap_df.loc[r, "SLOR_Base_And_Gap"] = slors[i]
+        slor_base_and_gap = gap_df.loc[r, "SLOR_Base_And_Gap"]
+        i += 1
+
+        gap_df.loc[r, "SLOR_Swap_And"] = slors[i]
+        slor_swap_and = gap_df.loc[r, "SLOR_Swap_And"]
+        i += 1
+
+        gap_df.loc[r, "SLOR_Swap_And_Gap"] = slors[i]
+        slor_swap_and_gap = gap_df.loc[r, "SLOR_Swap_And_Gap"]
+        i += 1
+
+        and_diff_base = slor_base_and_gap - slor_base_and
+        and_diff_swap = slor_swap_and_gap - slor_swap_and
+
+        la_diff_base = slor_base_gap - slor_base
+        la_diff_swap = slor_swap_gap - slor_swap
+
+        total_count += 1
+        if (and_diff_swap > la_diff_swap) and (and_diff_base > la_diff_base):
+            gap_df.loc[r, "Correct_Diff"] = "Y"
+            correct_count_diff += 1
+
+        if (slor_base_and_gap > slor_base_gap) and (slor_swap_and_gap > slor_swap_gap):
+            gap_df.loc[r, "Correct"] = "Y"
+            correct_count += 1
+
+    gap_df.to_csv("results_gap.csv", index=False)
+    print(i, len(slors))
+    #print(correct_count, total_count, correct_count / total_count)
+    print(f"AND OVER LET ALONE GAP RESULTS: {correct_count}/{total_count} correct ({correct_count / total_count})")
+    print(f"DIFF OVER LET ALONE GAP RESULTS: {correct_count_diff}/{total_count} correct ({correct_count_diff / total_count})")
+
+def evaluate_vp(model, tokenizer, vp_df, output_dir, unigramlm=None, slor=False):
+    """
+    evaluate the vp dataset
+    """
+    let_alone_list = []
+    for r in vp_df.index:
+        base_subbed = vp_df.loc[r, "base_subbed"]
+        base_vp_subbed = vp_df.loc[r, "base_vp_subbed"]
+
+        swap_subbed = vp_df.loc[r, "swap_subbed"]
+        swap_vp_subbed = vp_df.loc[r, "swap_vp_subbed"]
+
+        base_and_subbed = vp_df.loc[r, "base_and_subbed"]
+        base_and_vp_subbed = vp_df.loc[r, "base_and_vp_subbed"]
+
+        swap_and_subbed = vp_df.loc[r, "swap_and_subbed"]
+        swap_and_vp_subbed = vp_df.loc[r, "swap_and_vp_subbed"]
+
+        let_alone_list.append(base_subbed)
+        let_alone_list.append(base_vp_subbed)
+        let_alone_list.append(swap_subbed)
+        let_alone_list.append(swap_vp_subbed)
+        let_alone_list.append(base_and_subbed)
+        let_alone_list.append(base_and_vp_subbed)
+        let_alone_list.append(swap_and_subbed)
+        let_alone_list.append(swap_and_vp_subbed)
+
+    let_alone_list_surps = surprisal_long_list(model, tokenizer, let_alone_list)  #
+    if slor:
+        let_alone_list_surps = [-s for s in let_alone_list_surps]  # change to logprobs
+        # print(ls_surps)
+        ls_u  = logprob_list_unigrams(unigramlm, let_alone_list)
+        # print(ls_u)
+        slors = [lm - u for (lm, u) in zip(let_alone_list_surps, ls_u)]
+    i = 0
+    correct_count = 0
+    correct_count_diff = 0
+    total_count = 0
+    for r in vp_df.index:
+        vp_df.loc[r, "SLOR_Base"] = slors[i]
+        slor_base = vp_df.loc[r, "SLOR_Base"]
+        i += 1
+
+        vp_df.loc[r, "SLOR_Base_VP"] = slors[i]
+        slor_base_vp = vp_df.loc[r, "SLOR_Base_VP"]
+        i += 1
+
+        vp_df.loc[r, "SLOR_Swap"] = slors[i]
+        slor_swap = vp_df.loc[r, "SLOR_Swap"]
+        i += 1
+
+        vp_df.loc[r, "SLOR_Swap_VP"] = slors[i]
+        slor_swap_vp = vp_df.loc[r, "SLOR_Swap_VP"]
+        i += 1
+
+        vp_df.loc[r, "SLOR_Base_And"] = slors[i]
+        slor_base_and = vp_df.loc[r, "SLOR_Base_And"]
+        i += 1
+
+        vp_df.loc[r, "SLOR_Base_And_VP"] = slors[i]
+        slor_base_and_vp = vp_df.loc[r, "SLOR_Base_And_VP"]
+        i += 1
+
+        vp_df.loc[r, "SLOR_Swap_And"] = slors[i]
+        slor_swap_and = vp_df.loc[r, "SLOR_Swap_And"]
+        i += 1
+
+        vp_df.loc[r, "SLOR_Swap_And_VP"] = slors[i]
+        slor_swap_and_vp = vp_df.loc[r, "SLOR_Swap_And_VP"]
+        i += 1
+
+        and_diff_base = slor_base_and_vp - slor_base_and
+        and_diff_swap = slor_swap_and_vp - slor_swap_and
+
+        la_diff_base = slor_base_vp - slor_base
+        la_diff_swap = slor_swap_vp - slor_swap
+
+        total_count += 1
+        if (and_diff_swap > la_diff_swap) and (and_diff_base > la_diff_base):
+            vp_df.loc[r, "Correct_Diff"] = "Y"
+            correct_count_diff += 1
+
+        if (slor_base_and_vp > slor_base_vp) and (slor_swap_and_vp > slor_swap_vp):
+            vp_df.loc[r, "Correct"] = "Y"
+            correct_count += 1
+
+    vp_df.to_csv("results_vp.csv", index=False)
+    print(i, len(slors))
+    #print(correct_count, total_count, correct_count / total_count)
+    print(f"AND OVER LET ALONE VP RESULTS: {correct_count}/{total_count} correct ({correct_count / total_count})")
+    print(f"DIFF OVER LET ALONE VP RESULTS: {correct_count_diff}/{total_count} correct ({correct_count_diff / total_count})")
 
 def evaluate_semantics(model, tokenizer, sem_df, output_dir, unigramlm=None, slor=False):
     """
@@ -448,6 +632,109 @@ def evaluate_semantics(model, tokenizer, sem_df, output_dir, unigramlm=None, slo
     print(f"SEMANTICS DATASET: {correct_count}/{total_count} correct ({correct_count / total_count})")
     sem_df.to_csv("results_semantics.csv", index=False)
 
+
+
+def loop_checkpoints(model_dir, test_file, output_dir, form=False, slor=False):
+    """
+    actually loops through the checkpoints of a model and does eval
+    """
+    counts_dir = model_dir +"counts.csv"
+
+    chkpt_dir = model_dir + "chkpts/"
+    tokenizer_dir = model_dir + "tokenizer/"
+    checkpoint_list = glob.glob(chkpt_dir + "*/")
+    checkpoint_list = [ch for ch in checkpoint_list if "logs/" not in ch]
+    # print(checkpoint_list)
+    checkpoint_list.sort(key=lambda x: int(x.rstrip("/").split("/")[3].split("-")[1])) #sort checkpoints in order that they occured.
+
+    tokenizer = AutoTokenizer.from_pretrained(tokenizer_dir)
+    print("tokenizer loaded")
+
+    if slor:
+        print("loading unigram model")
+        unigramlm = UnigramLM(counts_dir, tokenizer)
+        unigramlm.load_counts()
+        print("unigram model loaded")
+    else:
+        unigramlm = None
+
+    npi_df = pd.read_csv("Data/Let-Alone_Data/new_test_npi.tsv", sep="\t")
+    ps_df = pd.read_csv("Data/Let-Alone_Data/new_test_psuedoclefting.tsv", sep="\t")
+    cp_df = pd.read_csv("Data/Let-Alone_Data/new_test_cp.tsv", sep="\t")
+    sem_df = pd.read_csv("Data/Let-Alone_Data/new_test_semantic.tsv", sep="\t")
+    gap_df = pd.read_csv("Data/Let-Alone_Data/new_test_gap.tsv", sep="\t")
+    vp_df = pd.read_csv("Data/Let-Alone_Data/new_test_vp.tsv", sep="\t")
+
+
+    summary_dir = output_dir + "summary.txt"
+    with open(summary_dir, "w") as out2:
+        print("THIS IS THE SUMMARY of the output", file=out2)
+
+    summaries = []
+
+    for ch in [checkpoint_list[-1]]: #just check last checkpoint
+        #print(ch)
+        ch_model = OPTForCausalLM.from_pretrained(ch)
+        #print("Checkpoint loaded.")
+        final_output_dir = output_dir + ch.split("/")[4]
+
+        print("Starting checkpoint evaluation:", ch.split("/")[4])
+
+        acc = evaluate_npi(ch_model, tokenizer, npi_df, final_output_dir, unigramlm=unigramlm, slor=slor)
+
+        print("----")
+
+        acc2 = evaluate_psuedo(ch_model, tokenizer, ps_df, final_output_dir, unigramlm=unigramlm, slor=slor)
+
+        print("----")
+
+        acc3 = evaluate_cp(ch_model, tokenizer, cp_df, final_output_dir, unigramlm=unigramlm, slor=slor)
+
+        print("----")
+
+        acc4 = evaluate_semantics(ch_model, tokenizer, sem_df, final_output_dir, unigramlm=unigramlm, slor=slor)
+
+        print("----")
+
+        acc5 = evaluate_gap(ch_model, tokenizer, gap_df, final_output_dir, unigramlm=unigramlm, slor=slor)
+
+        print("----")
+
+        acc6 = evaluate_vp(ch_model, tokenizer, vp_df, final_output_dir, unigramlm=unigramlm, slor=slor)
+
+
+
+
+        # with open(summary_dir, "a") as out2:
+        #     out2.write(ch + "\t" + str(acc) + "\n")
+        #
+        # print("Checkpoint evaluation finished")
+
+# def eval_other_model(other_model, test_file, output_dir):
+#     """evaluate performance of over nonBabyLM models"""
+#     df = load_perp_dataset(test_file)
+#     model = AutoModelForCausalLM.from_pretrained(other_model)
+#     tokenizer = AutoTokenizer.from_pretrained(other_model)
+#     acc = evaluate_dataset(model, tokenizer, df, output_dir, form=False)
+#     print(other_model, test_file, acc)
+
+if __name__ == "__main__":
+    parser = ArgumentParser()
+    parser.add_argument("--model_dir")
+    parser.add_argument("--output_dir")
+    parser.add_argument("--test_file")
+    parser.add_argument("--form", action="store_true")
+    parser.add_argument("--other_model", default=None)
+    parser.add_argument("--slor", action="store_true")
+
+
+    args = parser.parse_args()
+    #load_perp_dataset(args.test_file)
+    if not args.other_model:
+        loop_checkpoints(args.model_dir, args.test_file, args.output_dir, form=args.form, slor=args.slor)
+
+    else:
+        eval_other_model(args.other_model, args.test_file, args.output_dir)
 
 
 
@@ -615,95 +902,3 @@ def evaluate_semantics(model, tokenizer, sem_df, output_dir, unigramlm=None, slo
 #     print("CORRECT LAST", correct_last / total)
 #
 #     return correct_last / total
-
-def loop_checkpoints(model_dir, test_file, output_dir, form=False, slor=False):
-    """
-    actually loops through the checkpoints of a model and does eval
-    """
-    counts_dir = model_dir +"counts.csv"
-
-    chkpt_dir = model_dir + "chkpts/"
-    tokenizer_dir = model_dir + "tokenizer/"
-    checkpoint_list = glob.glob(chkpt_dir + "*/")
-    checkpoint_list = [ch for ch in checkpoint_list if "logs/" not in ch]
-    # print(checkpoint_list)
-    checkpoint_list.sort(key=lambda x: int(x.rstrip("/").split("/")[3].split("-")[1])) #sort checkpoints in order that they occured.
-
-    tokenizer = AutoTokenizer.from_pretrained(tokenizer_dir)
-    print("tokenizer loaded")
-
-    if slor:
-        print("loading unigram model")
-        unigramlm = UnigramLM(counts_dir, tokenizer)
-        unigramlm.load_counts()
-        print("unigram model loaded")
-    else:
-        unigramlm = None
-
-    npi_df = pd.read_csv("Data/Let-Alone_Data/new_test_npi.tsv", sep="\t")
-    ps_df = pd.read_csv("Data/Let-Alone_Data/new_test_psuedoclefting.tsv", sep="\t")
-    cp_df = pd.read_csv("Data/Let-Alone_Data/new_test_cp.tsv", sep="\t")
-    sem_df = pd.read_csv("Data/Let-Alone_Data/new_test_semantic.tsv", sep="\t")
-
-    summary_dir = output_dir + "summary.txt"
-    with open(summary_dir, "w") as out2:
-        print("THIS IS THE SUMMARY of the output", file=out2)
-
-    summaries = []
-
-    for ch in [checkpoint_list[-1]]: #just check last checkpoint
-        #print(ch)
-        ch_model = OPTForCausalLM.from_pretrained(ch)
-        #print("Checkpoint loaded.")
-        final_output_dir = output_dir + ch.split("/")[4]
-
-        print("Starting checkpoint evaluation:", ch.split("/")[4])
-
-        acc = evaluate_npi(ch_model, tokenizer, npi_df, final_output_dir, unigramlm=unigramlm, slor=slor)
-
-        print("----")
-
-        acc2 = evaluate_psuedo(ch_model, tokenizer, ps_df, final_output_dir, unigramlm=unigramlm, slor=slor)
-
-        print("----")
-
-        acc3 = evaluate_cp(ch_model, tokenizer, cp_df, final_output_dir, unigramlm=unigramlm, slor=slor)
-
-        print("----")
-
-        acc4 = evaluate_semantics(ch_model, tokenizer, sem_df, final_output_dir, unigramlm=unigramlm, slor=slor)
-
-
-        # with open(summary_dir, "a") as out2:
-        #     out2.write(ch + "\t" + str(acc) + "\n")
-        #
-        # print("Checkpoint evaluation finished")
-
-# def eval_other_model(other_model, test_file, output_dir):
-#     """evaluate performance of over nonBabyLM models"""
-#     df = load_perp_dataset(test_file)
-#     model = AutoModelForCausalLM.from_pretrained(other_model)
-#     tokenizer = AutoTokenizer.from_pretrained(other_model)
-#     acc = evaluate_dataset(model, tokenizer, df, output_dir, form=False)
-#     print(other_model, test_file, acc)
-
-if __name__ == "__main__":
-    parser = ArgumentParser()
-    parser.add_argument("--model_dir")
-    parser.add_argument("--output_dir")
-    parser.add_argument("--test_file")
-    parser.add_argument("--form", action="store_true")
-    parser.add_argument("--other_model", default=None)
-    parser.add_argument("--slor", action="store_true")
-
-
-    args = parser.parse_args()
-    #load_perp_dataset(args.test_file)
-    if not args.other_model:
-        loop_checkpoints(args.model_dir, args.test_file, args.output_dir, form=args.form, slor=args.slor)
-
-    else:
-        eval_other_model(args.other_model, args.test_file, args.output_dir)
-
-
-

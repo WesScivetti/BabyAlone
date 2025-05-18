@@ -12,8 +12,11 @@ def sub_template(pron, pred2, color1, n1, color2, n2, pred1, pred2_no_npi, templ
     last argument is the template that you are substituting into
     Returns the template with the substitutions made
     """
+    pred2_no_modal = " ".join(pred2.split()[1:]).strip(" ")
+    template = re.sub("<PRO2>", "you", template)
     template = re.sub("<PRO>", pron, template)
     template = re.sub("<P2>", pred2, template)
+    template = re.sub("<P2NM>", pred2_no_modal, template)
     template = re.sub("<C1>", color1, template)
     template = re.sub("<C2>", color2, template)
     template = re.sub("<X1>", n1, template)
@@ -28,64 +31,83 @@ def create_template_dict():
     creates a dictionary of templates for the tasks. Can be deployed across domains.
     """
     template_dict = {
-        "template_base" : "<PRO> <P2> the <C1> <X1>, let alone the <C2> <X2>.",
-        # I couldn't afford the blue watch, let alone the red watch.
+        "template_base" : "<PRO> <P2> the <C1> <X1> let alone the <C2> <X2>.",
+        # I couldn't afford the blue watch let alone the red watch.
 
-        "template_swap" : "<PRO> <P2> the <C2> <X2>, let alone the <C1> <X1>.",
-        # I couldn't afford the red watch, let alone the blue watch.
+        "template_swap" : "<PRO> <P2> the <C2> <X2> let alone the <C1> <X1>.",
+        # I couldn't afford the red watch let alone the blue watch.
 
-        "template_and_base" : "<PRO> <P2> the <C1> <X1>, and the <C2> <X2>.",
-        # I couldn't afford the blue watch, and the red watch.
+        "template_and_base" : "<PRO> <P2> the <C1> <X1> and the <C2> <X2>.",
+        # I couldn't afford the blue watch and the red watch.
 
-        "template_and_swap" : "<PRO> <P2> the <C2> <X2>, and the <C1> <X1>.",
-        # I couldn't afford the red watch, and the blue watch.
+        "template_and_swap" : "<PRO> <P2> the <C2> <X2> and the <C1> <X1>.",
+        # I couldn't afford the red watch and the blue watch.
 
-        "template_base_no_npi" : "<PRO> <P2N> the <C1> <X1>, let alone the <C2> <X2>.",
-        # I could afford the blue watch, let alone the red watch.
+        "template_base_no_npi" : "<PRO> <P2N> the <C1> <X1> let alone the <C2> <X2>.",
+        # I could afford the blue watch let alone the red watch.
 
-        "template_swap_no_npi" : "<PRO> <P2N> the <C2> <X2>, let alone the <C1> <X1>.",
-        # I could afford the red watch, let alone the blue watch.
+        "template_swap_no_npi" : "<PRO> <P2N> the <C2> <X2> let alone the <C1> <X1>.",
+        # I could afford the red watch let alone the blue watch.
 
-        "template_and_base_no_npi" : "<PRO> <P2N> the <C1> <X1>, and the <C2> <X2>.",
-        # I could afford the blue watch, and the red watch.
+        "template_and_base_no_npi" : "<PRO> <P2N> the <C1> <X1> and the <C2> <X2>.",
+        # I could afford the blue watch and the red watch.
 
-        "template_and_swap_no_npi" : "<PRO> <P2N> the <C2> <X2>, and the <C1> <X1>.",
+        "template_and_swap_no_npi" : "<PRO> <P2N> the <C2> <X2> and the <C1> <X1>.",
         # I could afford the red watch, and the blue watch.
 
-        "template_base_psuedo" : "It is the <C1> <X1>, let alone the <C2> <X2>, that <PRO> <P2>.",
+        "template_base_psuedo" : "It is the <C1> <X1>, let alone the <C2> <X2> that <PRO> <P2>.",
         # The blue watch, let alone the red watch, I couldn't afford. -> should be not ideal
 
-        "template_swap_psuedo" : "It is the <C2> <X2>, let alone the <C1> <X1>, that <PRO> <P2>.",
+        "template_swap_psuedo" : "It is the <C2> <X2> let alone the <C1> <X1>, that <PRO> <P2>.",
         # The red watch, let alone the blue watch, I couldn't afford. -> should be not ideal
 
-        "template_and_base_psuedo" : "It is the <C1> <X1>, and the <C2> <X2>, that <PRO> <P2>.",
-        # The blue watch, and the red watch, I couldn't afford. -> should be better
+        "template_and_base_psuedo" : "It is the <C1> <X1> and the <C2> <X2> that <PRO> <P2>.",
+        # The blue watch and the red watch I couldn't afford. -> should be better
 
-        "template_and_swap_psuedo" : "It is the <C2> <X2>, and the <C1> <X1>, that <PRO> <P2>.",
-        # The red watch, and the blue watch, I couldn't afford. -> should be better
+        "template_and_swap_psuedo" : "It is the <C2> <X2> and the <C1> <X1> that <PRO> <P2>.",
+        # The red watch, and the blue watch I couldn't afford. -> should be better
 
-        "template_base_cp" : "<PRO> <P2> the <C1> <X1>, let alone <PRO> <P2>  the <C2> <X2>.",
+        "template_base_cp" : "<PRO> <P2> the <C1> <X1> let alone <PRO> <P2> the <C2> <X2>.",
         # I couldn't afford the blue watch, let alone I couldn't afford the red watch. -> bad
 
-        "template_swap_cp" : "<PRO> <P2> the <C2> <X2>, let alone <PRO> <P2> the <C1> <X1>.",
+        "template_swap_cp" : "<PRO> <P2> the <C2> <X2> let alone <PRO> <P2> the <C1> <X1>.",
         # I couldn't afford the red watch, let alone I couldn't afford the blue watch. -> bad
 
-        "template_and_base_cp" : "<PRO> <P2> the <C1> <X1>, and <PRO> <P2> the <C2> <X2>.",
+        "template_and_base_cp" : "<PRO> <P2> the <C1> <X1> and <PRO> <P2> the <C2> <X2>.",
         # I couldn't afford the blue watch, and I couldn't afford the red watch. -> fine
 
-        "template_and_swap_cp" : "<PRO> <P2> the <C2> <X2>, and <PRO> <P2> the <C1> <X1>.",
+        "template_and_swap_cp" : "<PRO> <P2> the <C2> <X2> and <PRO> <P2> the <C1> <X1>.",
         # I couldn't afford the red watch, and I couldn't afford the blue watch. -> fine
 
-        "template_base_semantic" : "<PRO> <P2> the <C1> <X1>, let alone the <C2> <X2>. The <C1> <X1> <P1> than the <C2> <X2>.",
+        "template_base_vp": "<PRO> <P2> the <C1> <X1> let alone <P2NM> the <C2> <X2>.",
+        # I couldn't afford the blue watch, let alone afford the red watch. -> must take "couldn't" and other modals out
+        "template_swap_vp": "<PRO> <P2> the <C2> <X2> let alone <P2NM> the <C1> <X1>.",
+        # I couldn't afford the red watch, let alone afford the blue watch. -> must take "couldn't" and other modals out
+        "template_and_base_vp": "<PRO> <P2> the <C1> <X1> and <P2NM> the <C2> <X2>.",
+        # I couldn't afford the blue watch, and afford the red watch. -> must take "couldn't" and other modals out
+        "template_and_swap_vp": "<PRO> <P2> the <C2> <X2> and <P2NM> the <C1> <X1>.",
+        # I couldn't afford the red watch, and afford the blue watch. -> must take "couldn't" and other modals out
+
+        "template_base_gap": "<PRO> <P2> the <C1> <X1> let alone <PRO2> the <C2> <X2>.",
+        # I couldn't afford the blue watch let alone you the red watch. -> bad
+        "template_swap_gap": "<PRO> <P2> the <C2> <X2> let alone <PRO2> the <C1> <X1>.",
+        # I couldn't afford the red watch let alone you the blue watch. -> bad
+        "template_and_base_gap": "<PRO> <P2> the <C1> <X1> and <PRO2> the <C2> <X2>.",
+        # I couldn't afford the blue watch and you the red watch. -> bad
+        "template_and_swap_gap": "<PRO> <P2> the <C2> <X2> and <PRO2> the <C1> <X1>.",
+        # I couldn't afford the red watch and you the blue watch. -> bad
+
+
+        "template_base_semantic" : "<PRO> <P2> the <C1> <X1> let alone the <C2> <X2>. The <C1> <X1> <P1> than the <C2> <X2>.",
         # I couldn't afford the blue watch, let alone the red watch. The blue watch is more expensive than the red watch.
 
-        "template_base_semantic_2" : "<PRO> <P2> the <C1> <X1>, let alone the <C2> <X2>. The <C2> <X2> <P1> than the <C1> <X1>.",
+        "template_base_semantic_2" : "<PRO> <P2> the <C1> <X1> let alone the <C2> <X2>. The <C2> <X2> <P1> than the <C1> <X1>.",
         # I couldn't afford the blue watch, let alone the red watch. The red watch is more expensive than the blue watch. -> wrong for more expensive, right for cheaper/less expensive
 
-        "template_swap_semantic" : "<PRO> <P2> the <C2> <X2>, let alone the <C1> <X1>. The <C2> <X2> <P1> than the <C1> <X1>.",
+        "template_swap_semantic" : "<PRO> <P2> the <C2> <X2> let alone the <C1> <X1>. The <C2> <X2> <P1> than the <C1> <X1>.",
         # I couldn't afford the red watch, let alone the blue watch. The red watch is more expensive than the blue watch.
 
-        "template_swap_semantic_2" : "<PRO> <P2> the <C2> <X2>, let alone the <C1> <X1>. The <C1> <X1> <P1> than the <C2> <X2>."
+        "template_swap_semantic_2" : "<PRO> <P2> the <C2> <X2> let alone the <C1> <X1>. The <C1> <X1> <P1> than the <C2> <X2>."
         # I couldn't afford the red watch, let alone the blue watch. The blue watch is more expensive than the red watch. -> wrong for more expensive, right for cheaper/less expensive
     }
     return template_dict
@@ -101,6 +123,8 @@ def make_lines_lists(nouns, colors, predicates, predicates_2, predicates_2_no_np
     psuedoclefting_line_list = []
     cp_line_list = []
     semantic_line_list = []
+    gap_line_list = []
+    vp_line_list = []
 
     for predicate2, predicate2_no_npi in predicates2_npi_pairs:
         for n1 in nouns:
@@ -141,6 +165,17 @@ def make_lines_lists(nouns, colors, predicates, predicates_2, predicates_2_no_np
                 swap_and_cp_subbed = sub_template(pron, predicate2, color1, n1, color2, n2, "", "",
                                                   template_dict["template_and_swap_cp"])
 
+                base_gap_subbed = sub_template(pron, predicate2, color1, n1, color2, n2, "", "",
+                                               template_dict["template_base_gap"])
+                swap_gap_subbed = sub_template(pron, predicate2, color1, n1, color2, n2, "", "",
+                                                  template_dict["template_swap_gap"])
+                base_and_gap_subbed = sub_template(pron, predicate2, color1, n1, color2, n2, "", "",
+                                                    template_dict["template_and_base_gap"])
+                swap_and_gap_subbed = sub_template(pron, predicate2, color1, n1, color2, n2, "", "",
+                                                    template_dict["template_and_swap_gap"])
+
+
+
                 for predicate1 in predicates:
                     # semantic line
                     semantic_subbed = sub_template(pron, predicate2, color1, n1, color2, n2, predicate1, "",
@@ -161,8 +196,22 @@ def make_lines_lists(nouns, colors, predicates, predicates_2, predicates_2_no_np
                                          semantic_swapped_subbed, semantic_swapped_subbed_2]
                         semantic_line_list.append(semantic_line)
 
+
+
+                base_vp_subbed = sub_template(pron, predicate2, color1, n1, color2, n2, "", "",
+                                              template_dict["template_base_vp"])
+                swap_vp_subbed = sub_template(pron, predicate2, color1, n1, color2, n2, "", "",
+                                                template_dict["template_swap_vp"])
+                base_and_vp_subbed = sub_template(pron, predicate2, color1, n1, color2, n2, "", "",
+                                                  template_dict["template_and_base_vp"])
+                swap_and_vp_subbed = sub_template(pron, predicate2, color1, n1, color2, n2, "", "",
+                                                    template_dict["template_and_swap_vp"])
+
+                ##################################
+                #make the lines for the non-semantic ones
+
                 npi_line = [n1, color1, color2, predicate2, base_subbed, base_no_npi_subbed, swap_subbed,
-                            swap_no_npi_subbed, base_and_subbed, base_and_npi_subbed, swap_and_subbed, swap_no_npi_subbed]
+                            swap_no_npi_subbed, base_and_subbed, base_and_npi_subbed, swap_and_subbed, swap_and_npi_subbed]
                 npi_line_list.append(npi_line)
 
                 psuedoclefting_line = [n1, color1, color2, predicate2, base_subbed, base_psuedo_subbed, swap_subbed,
@@ -174,7 +223,15 @@ def make_lines_lists(nouns, colors, predicates, predicates_2, predicates_2_no_np
                            base_and_subbed, base_and_cp_subbed, swap_and_subbed, swap_and_cp_subbed]
                 cp_line_list.append(cp_line)
 
-    return npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list
+                gap_line = [n1, color1, color2, predicate2, base_subbed, base_gap_subbed, swap_subbed, swap_gap_subbed,
+                           base_and_subbed, base_and_gap_subbed, swap_and_subbed, swap_and_gap_subbed]
+                gap_line_list.append(gap_line)
+
+                vp_line = [n1, color1, color2, predicate2, base_subbed, base_vp_subbed, swap_subbed, swap_vp_subbed,
+                           base_and_subbed, base_and_vp_subbed, swap_and_subbed, swap_and_vp_subbed]
+                vp_line_list.append(vp_line)
+
+    return npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list, gap_line_list, vp_line_list
 
 def expense_templates():
     """
@@ -189,10 +246,10 @@ def expense_templates():
     predicates_2 = ["couldn't afford", "couldn't buy", "couldn't pay for", "didn't have enough money for"]
     predicates_2_no_npi = ["could afford", "could buy", "could pay for", "did have enough money for"]
 
-    npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list = make_lines_lists(nouns, colors, predicates,
+    npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list, gap_line_list, vp_line_list = make_lines_lists(nouns, colors, predicates,
                                                                                                  predicates_2,
                                                                                                  predicates_2_no_npi)
-    return npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list
+    return npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list, gap_line_list, vp_line_list
 
 
 def weight_templates():
@@ -204,11 +261,11 @@ def weight_templates():
     predicates = ["is heavier", "is lighter", "weighs more", "weighs less"]
     predicates2 = ["couldn't lift", "couldn't carry", "couldn't move", "couldn't pick up"]
     predicates2_no_npi = ["could lift", "could carry", "could move", "could pick up"]
-    npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list = make_lines_lists(nouns, colors,
+    npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list, gap_line_list, vp_line_list = make_lines_lists(nouns, colors,
                                                                                                  predicates,
                                                                                                  predicates2,
                                                                                                  predicates2_no_npi)
-    return npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list
+    return npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list, gap_line_list, vp_line_list
 
 
 def short_distance_templates():
@@ -217,11 +274,11 @@ def short_distance_templates():
     predicates = ["is further away", "is closer", "is nearer"]
     predicates2 = ["couldn't reach", "couldn't grab", "couldn't touch"]
     predicates2_no_npi = ["could reach", "could grab", "could touch"]
-    npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list = make_lines_lists(nouns, colors,
+    npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list, gap_line_list, vp_line_list = make_lines_lists(nouns, colors,
                                                                                                  predicates,
                                                                                                  predicates2,
                                                                                                  predicates2_no_npi)
-    return npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list
+    return npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list, gap_line_list, vp_line_list
 
 def long_distance_templates():
     nouns = ["house", "building"]
@@ -229,11 +286,11 @@ def long_distance_templates():
     predicates = ["is further away", "is closer", "is nearer"]
     predicates2 = ["couldn't reach", "couldn't get to", "couldn't walk to"]
     predicates2_no_npi = ["could reach", "could get to", "could walk to"]
-    npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list = make_lines_lists(nouns, colors,
+    npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list, gap_line_list, vp_line_list = make_lines_lists(nouns, colors,
                                                                                                  predicates,
                                                                                                  predicates2,
                                                                                                  predicates2_no_npi)
-    return npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list
+    return npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list, gap_line_list, vp_line_list
 
 def speed_templates_1():
     nouns = ["car", "boat", "truck", "van"]
@@ -241,11 +298,11 @@ def speed_templates_1():
     predicates = ["is faster", "is slower", "is quicker"]
     predicates2 = ["couldn't pass", "couldn't catch up to", "couldn't overtake"]
     predicates2_no_npi = ["could pass", "could catch up to", "could overtake"]
-    npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list = make_lines_lists(nouns, colors,
+    npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list, gap_line_list, vp_line_list = make_lines_lists(nouns, colors,
                                                                                                  predicates,
                                                                                                  predicates2,
                                                                                                  predicates2_no_npi)
-    return npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list
+    return npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list, gap_line_list, vp_line_list
 
 def speed_templates_2():
     nouns = ["dog", "cat", "rabbit", "puppy", "bunny", "kitten"]
@@ -253,11 +310,11 @@ def speed_templates_2():
     predicates = ["is faster", "is slower", "is quicker"]
     predicates2 = ["couldn't catch", "couldn't keep up with"]
     predicates2_no_npi = ["could catch", "could keep up with"]
-    npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list = make_lines_lists(nouns, colors,
+    npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list, gap_line_list, vp_line_list = make_lines_lists(nouns, colors,
                                                                                                  predicates,
                                                                                                  predicates2,
                                                                                                  predicates2_no_npi)
-    return npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list
+    return npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list, gap_line_list, vp_line_list
 
 
 def tea_templates():
@@ -266,11 +323,11 @@ def tea_templates():
     predicates = ["is hotter"]
     predicates2 = ["couldn't drink", "couldn't sip"]
     predicates2_no_npi = ["could drink", "could sip"]
-    npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list = make_lines_lists(nouns, colors,
+    npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list, gap_line_list, vp_line_list = make_lines_lists(nouns, colors,
                                                                                                  predicates,
                                                                                                  predicates2,
                                                                                                  predicates2_no_npi)
-    return npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list
+    return npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list, gap_line_list, vp_line_list
 
 
 
@@ -280,21 +337,23 @@ def create_templates(output_file):
     """
     put all the line lists together and write to files.
     """
-    npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list = expense_templates()
+    npi_line_list, psuedoclefting_line_list, cp_line_list, semantic_line_list, gap_line_list, vp_line_list = expense_templates()
 
     #combine these lists with weight_templates
-    npi_line_list2, psuedoclefting_line_list2, cp_line_list2, semantic_line_list2 = weight_templates()
+    npi_line_list2, psuedoclefting_line_list2, cp_line_list2, semantic_line_list2, gap_line_list2, vp_line_list2 = weight_templates()
 
-    npi_line_list3, psuedoclefting_line_list3, cp_line_list3, semantic_line_list3 = short_distance_templates()
-    npi_line_list4, psuedoclefting_line_list4, cp_line_list4, semantic_line_list4 = long_distance_templates()
-    npi_line_list5, psuedoclefting_line_list5, cp_line_list5, semantic_line_list5 = speed_templates_1()
-    npi_line_list6, psuedoclefting_line_list6, cp_line_list6, semantic_line_list6 = speed_templates_2()
-    npi_line_list7, psuedoclefting_line_list7, cp_line_list7, semantic_line_list7 = tea_templates()
+    npi_line_list3, psuedoclefting_line_list3, cp_line_list3, semantic_line_list3, gap_line_list3, vp_line_list3 = short_distance_templates()
+    npi_line_list4, psuedoclefting_line_list4, cp_line_list4, semantic_line_list4, gap_line_list4, vp_line_list4 = long_distance_templates()
+    npi_line_list5, psuedoclefting_line_list5, cp_line_list5, semantic_line_list5, gap_line_list5, vp_line_list5 = speed_templates_1()
+    npi_line_list6, psuedoclefting_line_list6, cp_line_list6, semantic_line_list6, gap_line_list6, vp_line_list6 = speed_templates_2()
+    npi_line_list7, psuedoclefting_line_list7, cp_line_list7, semantic_line_list7, gap_line_list7, vp_line_list7 = tea_templates()
 
     npi_line_list = npi_line_list + npi_line_list2 + npi_line_list3 + npi_line_list4 + npi_line_list5 + npi_line_list6 + npi_line_list7
     psuedoclefting_line_list = psuedoclefting_line_list + psuedoclefting_line_list2 + psuedoclefting_line_list3 + psuedoclefting_line_list4 + psuedoclefting_line_list5 + psuedoclefting_line_list6 + psuedoclefting_line_list7
     cp_line_list = cp_line_list + cp_line_list2 + cp_line_list3 + cp_line_list4 + cp_line_list5 + cp_line_list6 + cp_line_list7
     semantic_line_list = semantic_line_list + semantic_line_list2 + semantic_line_list3 + semantic_line_list4 + semantic_line_list5 + semantic_line_list6 + semantic_line_list7
+    gap_line_list = gap_line_list + gap_line_list2 + gap_line_list3 + gap_line_list4 + gap_line_list5 + gap_line_list6 + gap_line_list7
+    vp_line_list = vp_line_list + vp_line_list2 + vp_line_list3 + vp_line_list4 + vp_line_list5 + vp_line_list6 + vp_line_list7
 
 
 
@@ -303,12 +362,18 @@ def create_templates(output_file):
     psuedoclefting_df = pd.DataFrame(psuedoclefting_line_list, columns=["noun", "color1", "color2", "predicate2", "base_subbed", "base_psuedo_subbed", "swap_subbed", "swap_psuedo_subbed", "base_and_subbed", "base_and_psuedo_subbed", "swap_and_subbed", "swap_and_psuedo_subbed"])
     cp_df = pd.DataFrame(cp_line_list, columns=["noun", "color1", "color2", "predicate2", "base_subbed", "base_cp_subbed", "swap_subbed", "swap_cp_subbed", "base_and_subbed", "base_and_cp_subbed", "swap_and_subbed", "swap_and_cp_subbed"])
     semantic_df = pd.DataFrame(semantic_line_list, columns=["noun", "color1", "color2", "predicate2", "predicate1", "semantic_right", "semantic_wrong", "semantic_swapped_right", "semantic_swapped_wrong"])
+    gap_df = pd.DataFrame(gap_line_list, columns=["noun", "color1", "color2", "predicate2", "base_subbed", "base_gap_subbed", "swap_subbed", "swap_gap_subbed", "base_and_subbed", "base_and_gap_subbed", "swap_and_subbed", "swap_and_gap_subbed"])
+    vp_df = pd.DataFrame(vp_line_list, columns=["noun", "color1", "color2", "predicate2", "base_subbed", "base_vp_subbed", "swap_subbed", "swap_vp_subbed", "base_and_subbed", "base_and_vp_subbed", "swap_and_subbed", "swap_and_vp_subbed"])
+
+
 
     # write to files
     npi_df.to_csv(output_file + "_npi.tsv", sep="\t", index=False)
     psuedoclefting_df.to_csv(output_file + "_psuedoclefting.tsv", sep="\t", index=False)
     cp_df.to_csv(output_file + "_cp.tsv", sep="\t", index=False)
     semantic_df.to_csv(output_file + "_semantic.tsv", sep="\t", index=False)
+    gap_df.to_csv(output_file + "_gap.tsv", sep="\t", index=False)
+    vp_df.to_csv(output_file + "_vp.tsv", sep="\t", index=False)
 
 
 
