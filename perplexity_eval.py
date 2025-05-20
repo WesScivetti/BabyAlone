@@ -157,6 +157,7 @@ def evaluate_npi(model, tokenizer, npi_df, output_dir, unigramlm=None, slor=Fals
             npi_df.loc[r, "Correct"] = "N"
             total_count += 1
 
+    npi_df.to_csv("results_npi.csv", index=False)
     print(i, len(slors))
     #print(correct_count, total_count, correct_count / total_count)
     print(f"NPI DATASET: {correct_count}/{total_count} correct ({correct_count / total_count})")
@@ -256,7 +257,7 @@ def evaluate_psuedo(model, tokenizer, ps_df, output_dir, unigramlm=None, slor=Fa
             ps_df.loc[r, "Correct"] = "Y"
             correct_count += 1
 
-    ps_df.to_csv("results_psuedo.tsv", sep="\t", index=False)
+    ps_df.to_csv("results_psuedo.tsv", index=False)
 
         # if (slore_base > slore_base_no_npi) and (slore_swap > slore_swap_no_npi):
         #     npi_df.loc[r, "Correct"] = "Y"
@@ -591,6 +592,39 @@ def evaluate_semantics(model, tokenizer, sem_df, output_dir, unigramlm=None, slo
         let_alone_list.append(swap_wrong_la)
         stimuli_list.append(stim_wrong_la)
 
+        base_and_right = sem_df.loc[r, "semantic_and_right"]
+        base_and_right_la = base_and_right.split(".")[0] + "."
+        #print(base_and_right_la)
+        stim_and_right_la = base_and_right.split(".")[1].lstrip(" ") + "."
+        #print(stim_and_right_la)
+        let_alone_list.append(base_and_right_la)
+        stimuli_list.append(stim_and_right_la)
+
+        base_and_wrong = sem_df.loc[r, "semantic_and_wrong"]
+        base_and_wrong_la = base_and_wrong.split(".")[0] + "."
+        #print(base_and_wrong_la)
+        stim_and_wrong_la = base_and_wrong.split(".")[1].lstrip(" ") + "."
+        #print(stim_and_wrong_la)
+        let_alone_list.append(base_and_wrong_la)
+        stimuli_list.append(stim_and_wrong_la)
+
+        swap_and_right = sem_df.loc[r, "semantic_swapped_and_right"]
+        swap_and_right_la = swap_and_right.split(".")[0] + "."
+        #print(swap_and_right_la)
+        stim_and_right_la = swap_and_right.split(".")[1].lstrip(" ") + "."
+        #print(stim_and_right_la)
+        let_alone_list.append(swap_and_right_la)
+        stimuli_list.append(stim_and_right_la)
+
+        swap_and_wrong = sem_df.loc[r, "semantic_swapped_and_wrong"]
+        swap_and_wrong_la = swap_and_wrong.split(".")[0] + "."
+        #print(swap_and_wrong_la)
+        stim_and_wrong_la = swap_and_wrong.split(".")[1].lstrip(" ") + "."
+        #print(stim_and_wrong_la)
+        let_alone_list.append(swap_and_wrong_la)
+        stimuli_list.append(stim_and_wrong_la)
+
+
     let_alone_list_surps = surprisal_long_list(model, tokenizer, let_alone_list, stimuli_list)
     if slor:
         let_alone_list_surps = [-s for s in let_alone_list_surps]  # change to logprobs
@@ -601,6 +635,7 @@ def evaluate_semantics(model, tokenizer, sem_df, output_dir, unigramlm=None, slo
 
     i = 0
     correct_count = 0
+    correct_count_diff = 0
     total_count = 0
     for r in sem_df.index:
         sem_df.loc[r, "SLOR_Base_Right"] = slors[i]
@@ -619,7 +654,32 @@ def evaluate_semantics(model, tokenizer, sem_df, output_dir, unigramlm=None, slo
         slor_swap_wrong = sem_df.loc[r, "SLOR_Swap_Wrong"]
         i += 1
 
-        if (slor_base_right > slor_base_wrong) and (slor_swap_right > slor_swap_wrong):
+        sem_df.loc[r, "SLOR_Base_And_Right"] = slors[i]
+        slor_base_and_right = sem_df.loc[r, "SLOR_Base_And_Right"]
+        i += 1
+
+        sem_df.loc[r, "SLOR_Base_And_Wrong"] = slors[i]
+        slor_base_and_wrong = sem_df.loc[r, "SLOR_Base_And_Wrong"]
+        i += 1
+
+        sem_df.loc[r, "SLOR_Swap_And_Right"] = slors[i]
+        slor_swap_and_right = sem_df.loc[r, "SLOR_Swap_And_Right"]
+        i += 1
+
+        sem_df.loc[r, "SLOR_Swap_And_Wrong"] = slors[i]
+        slor_swap_and_wrong = sem_df.loc[r, "SLOR_Swap_And_Wrong"]
+        i += 1
+
+        and_diff_base = slor_base_and_wrong- slor_base_and_right
+        and_diff_swap = slor_swap_and_wrong - slor_swap_and_right
+        la_diff_base = slor_base_wrong - slor_base_right
+        la_diff_swap = slor_swap_wrong - slor_swap_right
+
+        if (and_diff_base > la_diff_base) and (and_diff_swap > la_diff_swap):
+            sem_df.loc[r, "Correct_Diff"] = "Y"
+            correct_count_diff += 1
+
+        if (slor_base_and_wrong > slor_base_and_right) and (slor_swap_and_wrong > slor_swap_and_right):
             sem_df.loc[r, "Correct"] = "Y"
             correct_count += 1
             total_count += 1
@@ -680,27 +740,27 @@ def loop_checkpoints(model_dir, test_file, output_dir, form=False, slor=False):
 
         print("Starting checkpoint evaluation:", ch.split("/")[4])
 
-        acc = evaluate_npi(ch_model, tokenizer, npi_df, final_output_dir, unigramlm=unigramlm, slor=slor)
-
-        print("----")
-
-        acc2 = evaluate_psuedo(ch_model, tokenizer, ps_df, final_output_dir, unigramlm=unigramlm, slor=slor)
-
-        print("----")
-
-        acc3 = evaluate_cp(ch_model, tokenizer, cp_df, final_output_dir, unigramlm=unigramlm, slor=slor)
-
-        print("----")
+        # acc = evaluate_npi(ch_model, tokenizer, npi_df, final_output_dir, unigramlm=unigramlm, slor=slor)
+        #
+        # print("----")
+        #
+        # acc2 = evaluate_psuedo(ch_model, tokenizer, ps_df, final_output_dir, unigramlm=unigramlm, slor=slor)
+        #
+        # print("----")
+        #
+        # acc3 = evaluate_cp(ch_model, tokenizer, cp_df, final_output_dir, unigramlm=unigramlm, slor=slor)
+        #
+        # print("----")
 
         acc4 = evaluate_semantics(ch_model, tokenizer, sem_df, final_output_dir, unigramlm=unigramlm, slor=slor)
 
         print("----")
 
-        acc5 = evaluate_gap(ch_model, tokenizer, gap_df, final_output_dir, unigramlm=unigramlm, slor=slor)
-
-        print("----")
-
-        acc6 = evaluate_vp(ch_model, tokenizer, vp_df, final_output_dir, unigramlm=unigramlm, slor=slor)
+        # acc5 = evaluate_gap(ch_model, tokenizer, gap_df, final_output_dir, unigramlm=unigramlm, slor=slor)
+        #
+        # print("----")
+        #
+        # acc6 = evaluate_vp(ch_model, tokenizer, vp_df, final_output_dir, unigramlm=unigramlm, slor=slor)
 
 
 

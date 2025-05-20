@@ -107,7 +107,19 @@ def create_template_dict():
         "template_swap_semantic" : "<PRO> <P2> the <C2> <X2> let alone the <C1> <X1>. The <C2> <X2> <P1> than the <C1> <X1>.",
         # I couldn't afford the red watch, let alone the blue watch. The red watch is more expensive than the blue watch.
 
-        "template_swap_semantic_2" : "<PRO> <P2> the <C2> <X2> let alone the <C1> <X1>. The <C1> <X1> <P1> than the <C2> <X2>."
+        "template_swap_semantic_2" : "<PRO> <P2> the <C2> <X2> let alone the <C1> <X1>. The <C1> <X1> <P1> than the <C2> <X2>.",
+        # I couldn't afford the red watch, let alone the blue watch. The blue watch is more expensive than the red watch. -> wrong for more expensive, right for cheaper/less expensive
+
+        "template_base_and_semantic": "<PRO> <P2> the <C1> <X1> and the <C2> <X2>. The <C1> <X1> <P1> than the <C2> <X2>.",
+        # I couldn't afford the blue watch, let alone the red watch. The blue watch is more expensive than the red watch.
+
+        "template_base_and_semantic_2": "<PRO> <P2> the <C1> <X1> and the <C2> <X2>. The <C2> <X2> <P1> than the <C1> <X1>.",
+        # I couldn't afford the blue watch, let alone the red watch. The red watch is more expensive than the blue watch. -> wrong for more expensive, right for cheaper/less expensive
+
+        "template_swap_and_semantic": "<PRO> <P2> the <C2> <X2> and the <C1> <X1>. The <C2> <X2> <P1> than the <C1> <X1>.",
+        # I couldn't afford the red watch, let alone the blue watch. The red watch is more expensive than the blue watch.
+
+        "template_swap_and_semantic_2": "<PRO> <P2> the <C2> <X2> and the <C1> <X1>. The <C1> <X1> <P1> than the <C2> <X2>."
         # I couldn't afford the red watch, let alone the blue watch. The blue watch is more expensive than the red watch. -> wrong for more expensive, right for cheaper/less expensive
     }
     return template_dict
@@ -187,13 +199,24 @@ def make_lines_lists(nouns, colors, predicates, predicates_2, predicates_2_no_np
                     semantic_swapped_subbed_2 = sub_template(pron, predicate2, color1, n1, color2, n2, predicate1, "",
                                                              template_dict["template_swap_semantic_2"])
 
+
+                    semantic_and_subbed = sub_template(pron, predicate2, color1, n1, color2, n2, predicate1, "",
+                                                   template_dict["template_base_and_semantic"])
+                    semantic_and_subbed_2 = sub_template(pron, predicate2, color1, n1, color2, n2, predicate1, "",
+                                                     template_dict["template_base_and_semantic_2"])
+                    semantic_swapped_and_subbed = sub_template(pron, predicate2, color1, n1, color2, n2, predicate1, "",
+                                                           template_dict["template_swap_and_semantic"])
+                    semantic_swapped_and_subbed_2 = sub_template(pron, predicate2, color1, n1, color2, n2, predicate1, "",
+                                                             template_dict["template_swap_and_semantic_2"])
+
+
                     if predicate1 in ["is more expensive", "is heavier", "weighs more", "is further away", "is faster", "is quicker", "is hotter"]:
                         semantic_line = [n1, color1, color2, predicate2, predicate1, semantic_subbed_2, semantic_subbed,
-                                         semantic_swapped_subbed_2, semantic_swapped_subbed]
+                                         semantic_swapped_subbed_2, semantic_swapped_subbed, semantic_and_subbed, semantic_and_subbed_2, semantic_swapped_and_subbed, semantic_swapped_and_subbed_2]
                         semantic_line_list.append(semantic_line)
                     else:
                         semantic_line = [n1, color1, color2, predicate2, predicate1, semantic_subbed, semantic_subbed_2,
-                                         semantic_swapped_subbed, semantic_swapped_subbed_2]
+                                         semantic_swapped_subbed, semantic_swapped_subbed_2, semantic_and_subbed, semantic_and_subbed_2, semantic_swapped_and_subbed, semantic_swapped_and_subbed_2]
                         semantic_line_list.append(semantic_line)
 
 
@@ -361,7 +384,7 @@ def create_templates(output_file):
     npi_df = pd.DataFrame(npi_line_list, columns=["noun", "color1", "color2", "predicate2", "base_subbed", "base_no_npi_subbed", "swap_subbed", "swap_no_npi_subbed", "base_and_subbed", "base_and_npi_subbed", "swap_and_subbed", "swap_and_npi_subbed"])
     psuedoclefting_df = pd.DataFrame(psuedoclefting_line_list, columns=["noun", "color1", "color2", "predicate2", "base_subbed", "base_psuedo_subbed", "swap_subbed", "swap_psuedo_subbed", "base_and_subbed", "base_and_psuedo_subbed", "swap_and_subbed", "swap_and_psuedo_subbed"])
     cp_df = pd.DataFrame(cp_line_list, columns=["noun", "color1", "color2", "predicate2", "base_subbed", "base_cp_subbed", "swap_subbed", "swap_cp_subbed", "base_and_subbed", "base_and_cp_subbed", "swap_and_subbed", "swap_and_cp_subbed"])
-    semantic_df = pd.DataFrame(semantic_line_list, columns=["noun", "color1", "color2", "predicate2", "predicate1", "semantic_right", "semantic_wrong", "semantic_swapped_right", "semantic_swapped_wrong"])
+    semantic_df = pd.DataFrame(semantic_line_list, columns=["noun", "color1", "color2", "predicate2", "predicate1", "semantic_right", "semantic_wrong", "semantic_swapped_right", "semantic_swapped_wrong", "semantic_and_right", "semantic_and_wrong", "semantic_swapped_and_right", "semantic_swapped_and_wrong"])
     gap_df = pd.DataFrame(gap_line_list, columns=["noun", "color1", "color2", "predicate2", "base_subbed", "base_gap_subbed", "swap_subbed", "swap_gap_subbed", "base_and_subbed", "base_and_gap_subbed", "swap_and_subbed", "swap_and_gap_subbed"])
     vp_df = pd.DataFrame(vp_line_list, columns=["noun", "color1", "color2", "predicate2", "base_subbed", "base_vp_subbed", "swap_subbed", "swap_vp_subbed", "base_and_subbed", "base_and_vp_subbed", "swap_and_subbed", "swap_and_vp_subbed"])
 
