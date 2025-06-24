@@ -679,7 +679,7 @@ def evaluate_semantics(model, tokenizer, sem_df, output_dir, unigramlm=None, slo
             sem_df.loc[r, "Correct_Diff"] = "Y"
             correct_count_diff += 1
 
-        if (slor_base_and_wrong > slor_base_and_right) and (slor_swap_and_wrong > slor_swap_and_right):
+        if (slor_base_right > slor_base_wrong) and (slor_swap_right> slor_swap_wrong):
             sem_df.loc[r, "Correct"] = "Y"
             correct_count += 1
             total_count += 1
@@ -689,6 +689,7 @@ def evaluate_semantics(model, tokenizer, sem_df, output_dir, unigramlm=None, slo
             total_count += 1
 
     print(i, len(slors))
+    print(f"SEMANTICS DATASET DIFF: {correct_count_diff}/{total_count} correct ({correct_count_diff / total_count})")
     print(f"SEMANTICS DATASET: {correct_count}/{total_count} correct ({correct_count / total_count})")
     sem_df.to_csv("results_semantics.csv", index=False)
 
@@ -705,7 +706,7 @@ def loop_checkpoints(model_dir, test_file, output_dir, form=False, slor=False):
     checkpoint_list = glob.glob(chkpt_dir + "*/")
     checkpoint_list = [ch for ch in checkpoint_list if "logs/" not in ch]
     # print(checkpoint_list)
-    checkpoint_list.sort(key=lambda x: int(x.rstrip("/").split("/")[3].split("-")[1])) #sort checkpoints in order that they occured.
+    checkpoint_list.sort(key=lambda x: int(x.rstrip("/").split("/")[4].split("-")[1])) #sort checkpoints in order that they occured.
 
     tokenizer = AutoTokenizer.from_pretrained(tokenizer_dir)
     print("tokenizer loaded")
@@ -722,6 +723,9 @@ def loop_checkpoints(model_dir, test_file, output_dir, form=False, slor=False):
     ps_df = pd.read_csv("Data/Let-Alone_Data/new_test_psuedoclefting.tsv", sep="\t")
     cp_df = pd.read_csv("Data/Let-Alone_Data/new_test_cp.tsv", sep="\t")
     sem_df = pd.read_csv("Data/Let-Alone_Data/new_test_semantic.tsv", sep="\t")
+    sem_df2 = pd.read_csv("Data/Let-Alone_Data/new_test_semantics_much_less.tsv", sep="\t") #for semantics2
+    sem_df3 = pd.read_csv("Data/Let-Alone_Data/new_test_semantics_not_to_mention.tsv", sep="\t") #for semantics3
+    sem_df4 = pd.read_csv("Data/Let-Alone_Data/new_test_semantics_never_mind.tsv", sep="\t") #for semantics4
     gap_df = pd.read_csv("Data/Let-Alone_Data/new_test_gap.tsv", sep="\t")
     vp_df = pd.read_csv("Data/Let-Alone_Data/new_test_vp.tsv", sep="\t")
 
@@ -740,9 +744,9 @@ def loop_checkpoints(model_dir, test_file, output_dir, form=False, slor=False):
 
         print("Starting checkpoint evaluation:", ch.split("/")[4])
 
-        # acc = evaluate_npi(ch_model, tokenizer, npi_df, final_output_dir, unigramlm=unigramlm, slor=slor)
-        #
-        # print("----")
+        acc = evaluate_npi(ch_model, tokenizer, npi_df, final_output_dir, unigramlm=unigramlm, slor=slor)
+
+        print("----")
         #
         # acc2 = evaluate_psuedo(ch_model, tokenizer, ps_df, final_output_dir, unigramlm=unigramlm, slor=slor)
         #
@@ -753,6 +757,18 @@ def loop_checkpoints(model_dir, test_file, output_dir, form=False, slor=False):
         # print("----")
 
         acc4 = evaluate_semantics(ch_model, tokenizer, sem_df, final_output_dir, unigramlm=unigramlm, slor=slor)
+
+        print("----")
+
+        acc4_2 = evaluate_semantics(ch_model, tokenizer, sem_df2, final_output_dir, unigramlm=unigramlm, slor=slor)
+
+        print("----")
+
+        acc4_3 = evaluate_semantics(ch_model, tokenizer, sem_df3, final_output_dir, unigramlm=unigramlm, slor=slor)
+
+        print("----")
+
+        acc4_4 = evaluate_semantics(ch_model, tokenizer, sem_df4, final_output_dir, unigramlm=unigramlm, slor=slor)
 
         print("----")
 
@@ -770,13 +786,30 @@ def loop_checkpoints(model_dir, test_file, output_dir, form=False, slor=False):
         #
         # print("Checkpoint evaluation finished")
 
-# def eval_other_model(other_model, test_file, output_dir):
-#     """evaluate performance of over nonBabyLM models"""
-#     df = load_perp_dataset(test_file)
-#     model = AutoModelForCausalLM.from_pretrained(other_model)
-#     tokenizer = AutoTokenizer.from_pretrained(other_model)
-#     acc = evaluate_dataset(model, tokenizer, df, output_dir, form=False)
-#     print(other_model, test_file, acc)
+def eval_other_model(model_dir, other_model, test_file, output_dir, form=False, slor=False):
+    """evaluate performance of over nonBabyLM models"""
+
+    sem_df = pd.read_csv("Data/Let-Alone_Data/new_test_semantic.tsv", sep="\t") #hard coded for now
+
+    final_output_dir = output_dir + "final_output/"
+
+    counts_dir = model_dir + "counts.csv"
+    tokenizer_dir = model_dir + "tokenizer/"
+
+    old_tokenizer = AutoTokenizer.from_pretrained(tokenizer_dir)
+    if slor:
+        print("loading unigram model")
+        unigramlm = UnigramLM(counts_dir, old_tokenizer)
+        unigramlm.load_counts()
+        print("unigram model loaded")
+
+    print("loading other model:", other_model)
+    model = AutoModelForCausalLM.from_pretrained(other_model)
+    tokenizer = AutoTokenizer.from_pretrained(other_model)
+    print("other model and tokenizer loaded")
+    print("doing evaluation on semantics dataset")
+    acc = evaluate_semantics(model, tokenizer, sem_df, final_output_dir, unigramlm=unigramlm, slor=slor)
+    print(other_model, test_file, acc)
 
 if __name__ == "__main__":
     parser = ArgumentParser()
@@ -794,7 +827,7 @@ if __name__ == "__main__":
         loop_checkpoints(args.model_dir, args.test_file, args.output_dir, form=args.form, slor=args.slor)
 
     else:
-        eval_other_model(args.other_model, args.test_file, args.output_dir)
+        eval_other_model(args.model_dir, args.other_model, args.test_file, args.output_dir, form=False, slor=args.slor)
 
 
 
