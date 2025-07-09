@@ -11,6 +11,7 @@ from transformers import PreTrainedTokenizerFast, AutoTokenizer, OPTConfig, OPTF
 from minicons import scorer
 from unigramlm import UnigramLM
 import re
+from tqdm import tqdm
 
 OPENAI_KEY = "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"
 
@@ -22,7 +23,7 @@ def load_perp_dataset(input_file):
     return df
 
 
-def avg_surprisal_minicons(model, tokenizer, let_alone_list, stimuli_list=None):
+def avg_surprisal_minicons(model, tokenizer, let_alone_list, stimuli_list=None, conversation_context=True):
     """
     calculates the surprisal using minicons
     """
@@ -33,6 +34,17 @@ def avg_surprisal_minicons(model, tokenizer, let_alone_list, stimuli_list=None):
     # surprisals = model.token_score(text_list, surprisal=True, base_two=True)
     # print(surprisals)
 
+    #print("LET_ALONE_LOST", let_alone_list)
+    new_la_list = ['Erica said "' + la_item + '" According to Erica, ' for la_item in let_alone_list]
+    #print("NEW_LET_ALONE_LOST", new_la_list)
+
+    #print("STIM_LIST",stimuli_list)
+    new_stim_list = [s.lower() for s in stimuli_list]
+    #print("NEW_STIM_LIST", new_stim_list)
+
+    if conversation_context:
+        let_alone_list = new_la_list
+        stimuli_list = new_stim_list
 
     if stimuli_list:
         seq_log_prob = model.conditional_score(let_alone_list, stimuli_list) #log prob
@@ -52,11 +64,11 @@ def surprisal_long_list(model, tokenizer, let_alone_list, stimuli_list=None):
     chunks_context = [let_alone_list[i:i + 32] for i in range(0, len(let_alone_list), 32)]
     if stimuli_list:
         chunks_stimuli = [stimuli_list[i:i + 32] for i in range(0, len(stimuli_list), 32)]
-        for chunk_context, chunk_stimuli in zip(chunks_context, chunks_stimuli):
+        for chunk_context, chunk_stimuli in tqdm(zip(chunks_context, chunks_stimuli), total=len(chunks_context), desc="Computing Surprisal"):
             sups = avg_surprisal_minicons(model, tokenizer, chunk_context, chunk_stimuli)
             chunk_surps.append(sups)
     else:
-        for chunk_context in chunks_context:
+        for chunk_context in tqdm(chunks_context, desc="Computing Surprisal"):
             sups = avg_surprisal_minicons(model, tokenizer, chunk_context)
             chunk_surps.append(sups)
     return list(chain.from_iterable(chunk_surps))
@@ -744,7 +756,7 @@ def loop_checkpoints(model_dir, test_file, output_dir, form=False, slor=False):
 
         print("Starting checkpoint evaluation:", ch.split("/")[4])
 
-        acc = evaluate_npi(ch_model, tokenizer, npi_df, final_output_dir, unigramlm=unigramlm, slor=slor)
+        # acc = evaluate_npi(ch_model, tokenizer, npi_df, final_output_dir, unigramlm=unigramlm, slor=slor)
 
         print("----")
         #
@@ -790,6 +802,9 @@ def eval_other_model(model_dir, other_model, test_file, output_dir, form=False, 
     """evaluate performance of over nonBabyLM models"""
 
     sem_df = pd.read_csv("Data/Let-Alone_Data/new_test_semantic.tsv", sep="\t") #hard coded for now
+    sem_df2 = pd.read_csv("Data/Let-Alone_Data/new_test_semantics_much_less.tsv", sep="\t") #for semantics2
+    sem_df3 = pd.read_csv("Data/Let-Alone_Data/new_test_semantics_not_to_mention.tsv", sep="\t") #for semantics3
+    sem_df4 = pd.read_csv("Data/Let-Alone_Data/new_test_semantics_never_mind.tsv", sep="\t") #for semantics4
 
     final_output_dir = output_dir + "final_output/"
 
@@ -810,6 +825,22 @@ def eval_other_model(model_dir, other_model, test_file, output_dir, form=False, 
     print("doing evaluation on semantics dataset")
     acc = evaluate_semantics(model, tokenizer, sem_df, final_output_dir, unigramlm=unigramlm, slor=slor)
     print(other_model, test_file, acc)
+    print("doing evaluation on semantics2 dataset")
+    acc2 = evaluate_semantics(model, tokenizer, sem_df2, final_output_dir, unigramlm=unigramlm, slor=slor)
+    print(other_model, test_file, acc2)
+    print("doing evaluation on semantics3 dataset")
+    acc3 = evaluate_semantics(model, tokenizer, sem_df3, final_output_dir, unigramlm=unigramlm, slor=slor)
+    print(other_model, test_file, acc3)
+    print("doing evaluation on semantics4 dataset")
+    acc4 = evaluate_semantics(model, tokenizer, sem_df4, final_output_dir, unigramlm=unigramlm, slor=slor)
+    print(other_model, test_file, acc4)
+    print("evaluation finished")
+    with open(final_output_dir + "summary.txt", "w") as out2:
+        print("THIS IS THE SUMMARY of the output", file=out2)
+        print(other_model, test_file, acc, file=out2)
+        print(other_model, test_file, acc2, file=out2)
+        print(other_model, test_file, acc3, file=out2)
+        print(other_model, test_file, acc4, file=out2)
 
 if __name__ == "__main__":
     parser = ArgumentParser()

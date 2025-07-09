@@ -2,6 +2,7 @@ import re
 import glob
 from argparse import ArgumentParser
 import random
+from collections import Counter
 
 
 def count_npi_la(input_dir, output_dir, related=False, all=False):
@@ -132,6 +133,26 @@ def filter_alone(input_dir, output_dir):
                         outf.write(line)
 
     print(f"Filtered out {filtered_counter} sentences")
+
+def counter(input_dir, output_dir):
+    """
+    counts the number of word types in the input directory
+    """
+
+    file_list = glob.glob(input_dir + "/*train")
+
+    counter = Counter()
+
+    for fname in file_list:
+        print("WORKING ON COUNTING", fname)
+        with open(fname) as inf:
+            for line in inf:
+                words = line.split()
+                words = [w.strip(".,!?;:()[]\"'") for w in words]
+                counter.update(words)
+    with open("counter.txt", "w") as outf:
+        for word, count in counter.most_common():
+            outf.write(f"{word}\t{count}\n")
 
 def filter_let_or_alone(input_dir, output_dir):
     """
@@ -288,7 +309,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     if args.random == False:
-        count_npi_la(args.input_dir, args.output_dir, related=args.related, all=args.all)
+        counter(args.input_dir, args.output_dir)
+        #count_npi_la(args.input_dir, args.output_dir, related=args.related, all=args.all)
         #filter_letalone(args.input_dir, args.output_dir, related=args.related, all=args.all)
         # filter_let_or_alone(args.input_dir, args.output_dir)
 
