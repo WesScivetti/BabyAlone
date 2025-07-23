@@ -30,6 +30,8 @@ def replace_df(df, new_cxn):
 much_less_df = replace_df(df, "much less")
 never_mind_df = replace_df(df, "never mind")
 not_to_mention_df = replace_df(df, "not to mention")
+nonce_df = replace_df(df, "$LET_ALONE$")
 much_less_df.to_csv("data/new_test_semantics_much_less.tsv", sep="\t", index=False)
 never_mind_df.to_csv("data/new_test_semantics_never_mind.tsv", sep="\t", index=False)
 not_to_mention_df.to_csv("data/new_test_semantics_not_to_mention.tsv", sep="\t", index=False)
+nonce_df.to_csv("data/new_test_semantics_nonce.tsv", sep="\t", index=False)
