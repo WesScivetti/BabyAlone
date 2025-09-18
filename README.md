@@ -1,6 +1,6 @@
 # BabyAlone
 
-BabyLM Scale Models and Let-Alone Experiments (ARR MAY)'
+BabyLM Scale Models and Let-Alone Experiments (to appear at EMNLP 2025).
 
 
 
